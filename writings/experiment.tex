@@ -1,9 +1,12 @@
 % \subsection{Experimental Setting}
 In this section, we conduct several experiments on two data sets: (1) the productional e-commerce data set; (2) the publicly available music data set.  We compare our proposed method HBayes against several other \emph{state-of-the-art} recommendation methods which are briefly described as follows:
+%\textbf{KNN} \cite{koren2010factor}:
 
-\textbf{KNN} \cite{koren2010factor}:
+\textbf{HSR} \cite{wang2015exploring}: is an item-based recommendation approach that employs a special non-negative matrix factorization for exploring the implicit hierarchical structure of users and items so the user preference towards certain products are better understood.  We adopt HSR  as one baseline. 
 
-\textbf{SVD++} \cite{mnih2008probabilistic, koren2008factorization}: combines the collaborative filtering approach and latent factor approach, so to provide a more accurate neighboring based recommendation result.  In this paper, we adopt SVD++ as another baseline.
+\textbf{HPF} \cite{gopalan2015scalable}: generates a hierarchical Poisson factorization model for better modeling users' rating towards certain items based upon each one's latent preferences.  Unlike proposed HBayes, HPF does not leverage the content item feature for constructing the hierarchical structure. We adopt HPF as another baseline.
+
+\textbf{SVD++} \cite{mnih2008probabilistic, koren2008factorization}: combines the collaborative filtering approach and latent factor approach, so to provide a more accurate neighboring based recommendation result.  We adopt SVD++ as another baseline.
 
 \textbf{CoClustering} \cite{george2005scalable}: another collaborative filtering flavored recommendation approach based on weighted co-clustering improvements that simultaneously cluster users and items.  We adopt CoClustering as another baseline.
 

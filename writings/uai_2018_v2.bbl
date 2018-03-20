@@ -51,6 +51,11 @@
 \newblock In {\em Data Mining, Fifth IEEE international conference on\/}
   (2005), IEEE, pp.~4--pp.
 
+\bibitem{gopalan2015scalable}
+{\sc Gopalan, P., Hofman, J.~M., and Blei, D.~M.}
+\newblock Scalable recommendation with hierarchical poisson factorization.
+\newblock In {\em UAI\/} (2015), pp.~326--335.
+
 \bibitem{Gultekin_acollaborative}
 {\sc Gultekin, S., and Paisley, J.}
 \newblock A collaborative kalman filter for time-evolving dyadic processes.
@@ -77,13 +82,6 @@
 {\sc Koren, Y.}
 \newblock Collaborative filtering with temporal dynamics.
 \newblock {\em Commun. ACM 53}, 4 (Apr. 2010), 89--97.
-
-\bibitem{koren2010factor}
-{\sc Koren, Y.}
-\newblock Factor in the neighbors: Scalable and accurate collaborative
-  filtering.
-\newblock {\em ACM Transactions on Knowledge Discovery from Data (TKDD) 4}, 1
-  (2010), 1.
 
 \bibitem{Liu:2011}
 {\sc Liu, Y., Miao, J., Zhang, M., Ma, S., and Ru, L.}
@@ -148,6 +146,11 @@
 {\sc Tang, J., Hu, X., and Liu, H.}
 \newblock Social recommendation: a review.
 \newblock {\em Social Network Analysis and Mining 3}, 4 (1 2013), 1113--1133.
+
+\bibitem{wang2015exploring}
+{\sc Wang, S., Tang, J., Wang, Y., and Liu, H.}
+\newblock Exploring implicit hierarchical structures for recommender systems.
+\newblock In {\em IJCAI\/} (2015), pp.~1813--1819.
 
 \bibitem{Yin:2011}
 {\sc Yin, D., Hong, L., Xue, Z., and Davison, B.~D.}
