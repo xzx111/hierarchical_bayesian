@@ -1,0 +1,75 @@
+PWD /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI
+INPUT /usr/local/texlive/2016/texmf.cnf
+INPUT /usr/local/texlive/2016/texmf-dist/web2c/texmf.cnf
+INPUT /usr/local/texlive/2016/texmf-var/web2c/pdftex/pdflatex.fmt
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/uai2018.tex
+OUTPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/uai2018.log
+INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/latex209.def
+INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/latex209.def
+INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/tracefnt.sty
+INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/tracefnt.sty
+INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/latexsym.sty
+INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/latexsym.sty
+INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/article.cls
+INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/article.cls
+INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/size10.clo
+INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/size10.clo
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/proceed.sty
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/proceed.sty
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/uai2018.aux
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/uai2018.aux
+OUTPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/uai2018.aux
+OUTPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/uai2018.pdf
+INPUT /usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/map/fontname/texfonts.map
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmbx10.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmss10.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmss8.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmss8.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmtt8.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmti7.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmti7.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmcsc10.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmsl10.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmsl8.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmsl8.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/ulasy.fd
+INPUT /usr/local/texlive/2016/texmf-dist/tex/latex/base/ulasy.fd
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/latex-fonts/lasy10.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/latex-fonts/lasy7.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/latex-fonts/lasy5.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/intro.tex
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/intro.tex
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/related.tex
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/related.tex
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/experiment.tex
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/experiment.tex
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/uai2018.bbl
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/uai2018.bbl
+INPUT /Users/zitaoliu/Dropbox/kdd-HMM-retrieval-modeling (1)/UAI/uai2018.aux
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx5.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx7.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb
+INPUT /usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb

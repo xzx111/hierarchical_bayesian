@@ -1,0 +1,172 @@
+\begin{thebibliography}{10}
+
+\bibitem{Ben-Elazar:2017}
+{\sc Ben-Elazar, S., Lavee, G., Koenigstein, N., Barkan, O., Berezin, H.,
+  Paquet, U., and Zaccai, T.}
+\newblock Groove radio: A bayesian hierarchical model for personalized playlist
+  generation.
+\newblock In {\em Proceedings of the Tenth ACM International Conference on Web
+  Search and Data Mining\/} (New York, NY, USA, 2017), WSDM '17, ACM,
+  pp.~445--453.
+
+\bibitem{burges2005learning}
+{\sc Burges, C., Shaked, T., Renshaw, E., Lazier, A., Deeds, M., Hamilton, N.,
+  and Hullender, G.}
+\newblock Learning to rank using gradient descent.
+\newblock In {\em Proceedings of the 22nd international conference on Machine
+  learning\/} (2005), ACM, pp.~89--96.
+
+\bibitem{burges2010ranknet}
+{\sc Burges, C.~J.}
+\newblock From ranknet to lambdarank to lambdamart: An overview.
+\newblock {\em Learning 11}, 23-581 (2010), 81.
+
+\bibitem{Celma:Springer2010}
+{\sc Celma, O.}
+\newblock {\em {Music Recommendation and Discovery in the Long Tail}}.
+\newblock Springer, 2010.
+
+\bibitem{de2016representation}
+{\sc De~Boom, C., Van~Canneyt, S., Demeester, T., and Dhoedt, B.}
+\newblock Representation learning for very short texts using weighted word
+  embedding aggregation.
+\newblock {\em Pattern Recognition Letters 80\/} (2016), 150--156.
+
+\bibitem{FMA}
+{\sc Defferrard, M., Benzi, K., Vandergheynst, P., and Bresson, X.}
+\newblock Fma: A dataset for music analysis.
+\newblock In {\em 18th International Society for Music Information Retrieval
+  Conference\/} (2017).
+
+\bibitem{donmez2009local}
+{\sc Donmez, P., Svore, K.~M., and Burges, C.~J.}
+\newblock On the local optimality of lambdarank.
+\newblock In {\em Proceedings of the 32nd international ACM SIGIR conference on
+  Research and development in information retrieval\/} (2009), ACM,
+  pp.~460--467.
+
+\bibitem{george2005scalable}
+{\sc George, T., and Merugu, S.}
+\newblock A scalable collaborative filtering framework based on co-clustering.
+\newblock In {\em Data Mining, Fifth IEEE international conference on\/}
+  (2005), IEEE, pp.~4--pp.
+
+\bibitem{Gultekin_acollaborative}
+{\sc Gultekin, S., and Paisley, J.}
+\newblock A collaborative kalman filter for time-evolving dyadic processes.
+\newblock In {\em Proceedings of the 2014 IEEE International Conference on Data
+  Mining\/} (Washington, DC, USA, 2014), ICDM '14, IEEE Computer Society,
+  pp.~140--149.
+
+\bibitem{Guy:2009}
+{\sc Guy, I., Zwerdling, N., Carmel, D., Ronen, I., Uziel, E., Yogev, S., and
+  Ofek-Koifman, S.}
+\newblock Personalized recommendation of social software items based on social
+  relations.
+\newblock In {\em Proceedings of the Third ACM Conference on Recommender
+  Systems\/} (New York, NY, USA, 2009), RecSys '09, ACM, pp.~53--60.
+
+\bibitem{koren2008factorization}
+{\sc Koren, Y.}
+\newblock Factorization meets the neighborhood: a multifaceted collaborative
+  filtering model.
+\newblock In {\em Proceedings of the 14th ACM SIGKDD international conference
+  on Knowledge discovery and data mining\/} (2008), ACM, pp.~426--434.
+
+\bibitem{Koren:2010}
+{\sc Koren, Y.}
+\newblock Collaborative filtering with temporal dynamics.
+\newblock {\em Commun. ACM 53}, 4 (Apr. 2010), 89--97.
+
+\bibitem{koren2010factor}
+{\sc Koren, Y.}
+\newblock Factor in the neighbors: Scalable and accurate collaborative
+  filtering.
+\newblock {\em ACM Transactions on Knowledge Discovery from Data (TKDD) 4}, 1
+  (2010), 1.
+
+\bibitem{Liu:2011}
+{\sc Liu, Y., Miao, J., Zhang, M., Ma, S., and Ru, L.}
+\newblock How do users describe their information need: Query recommendation
+  based on snippet click model.
+\newblock {\em Expert Systems with Applications 38}, 11 (2011), 13847 -- 13856.
+
+\bibitem{2011rsh..book...73L}
+{\sc {Lops}, P., {de Gemmis}, M., and {Semeraro}, G.}
+\newblock {\em {Content-based Recommender Systems: State of the Art and
+  Trends}}.
+\newblock 2011, p.~73.
+
+\bibitem{maaten2008visualizing}
+{\sc Maaten, L. v.~d., and Hinton, G.}
+\newblock Visualizing data using t-sne.
+\newblock {\em Journal of machine learning research 9}, Nov (2008), 2579--2605.
+
+\bibitem{mnih2008probabilistic}
+{\sc Mnih, A., and Salakhutdinov, R.~R.}
+\newblock Probabilistic matrix factorization.
+\newblock In {\em Advances in neural information processing systems\/} (2008),
+  pp.~1257--1264.
+
+\bibitem{rendle2010factorization}
+{\sc Rendle, S.}
+\newblock Factorization machines.
+\newblock In {\em Data Mining (ICDM), 2010 IEEE 10th International Conference
+  on\/} (2010), IEEE, pp.~995--1000.
+
+\bibitem{rendle2012factorization}
+{\sc Rendle, S.}
+\newblock Factorization machines with libfm.
+\newblock {\em ACM Transactions on Intelligent Systems and Technology (TIST)
+  3}, 3 (2012), 57.
+
+\bibitem{rendle2009bpr}
+{\sc Rendle, S., Freudenthaler, C., Gantner, Z., and Schmidt-Thieme, L.}
+\newblock Bpr: Bayesian personalized ranking from implicit feedback.
+\newblock In {\em Proceedings of the twenty-fifth conference on uncertainty in
+  artificial intelligence\/} (2009), AUAI Press, pp.~452--461.
+
+\bibitem{Rendle:2010:FPM}
+{\sc Rendle, S., Freudenthaler, C., and Schmidt-Thieme, L.}
+\newblock Factorizing personalized markov chains for next-basket
+  recommendation.
+\newblock In {\em Proceedings of the 19th International Conference on World
+  Wide Web\/} (New York, NY, USA, 2010), WWW '10, ACM, pp.~811--820.
+
+\bibitem{Sarwar:2001:ICF:371920.372071}
+{\sc Sarwar, B., Karypis, G., Konstan, J., and Riedl, J.}
+\newblock Item-based collaborative filtering recommendation algorithms.
+\newblock In {\em Proceedings of the 10th International Conference on World
+  Wide Web\/} (New York, NY, USA, 2001), WWW '01, ACM, pp.~285--295.
+
+\bibitem{Su:2009:SCF:1592474.1722966}
+{\sc Su, X., and Khoshgoftaar, T.~M.}
+\newblock A survey of collaborative filtering techniques.
+\newblock {\em Adv. in Artif. Intell. 2009\/} (Jan. 2009), 4:2--4:2.
+
+\bibitem{Tang_review:2013}
+{\sc Tang, J., Hu, X., and Liu, H.}
+\newblock Social recommendation: a review.
+\newblock {\em Social Network Analysis and Mining 3}, 4 (1 2013), 1113--1133.
+
+\bibitem{Yin:2011}
+{\sc Yin, D., Hong, L., Xue, Z., and Davison, B.~D.}
+\newblock Temporal dynamics of user interests in tagging systems.
+\newblock In {\em Proceedings of the Twenty-Fifth AAAI Conference on Artificial
+  Intelligence\/} (2011), AAAI'11, AAAI Press, pp.~1279--1285.
+
+\bibitem{Yuan:2015}
+{\sc Yuan, Q., Cong, G., Zhao, K., Ma, Z., and Sun, A.}
+\newblock Who, where, when, and what: A nonparametric bayesian approach to
+  context-aware recommendation and search for twitter users.
+\newblock {\em ACM Trans. Inf. Syst. 33}, 1 (Feb. 2015), 2:1--2:33.
+
+\bibitem{zhang2007efficient}
+{\sc Zhang, Y., and Koren, J.}
+\newblock Efficient bayesian hierarchical user modeling for recommendation
+  system.
+\newblock In {\em Proceedings of the 30th annual international ACM SIGIR
+  conference on Research and development in information retrieval\/} (2007),
+  ACM, pp.~47--54.
+
+\end{thebibliography}

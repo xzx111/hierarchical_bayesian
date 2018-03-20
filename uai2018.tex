@@ -1,0 +1,83 @@
+% Sample LaTeX file for creating a paper in the Morgan Kaufmannn two
+% column, 8 1/2 by 11 inch proceedings format.
+\documentstyle[proceed]{article}
+
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs} % for professional tables
+\usepackage{bm}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amstext}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{colortbl}
+\definecolor{mygray}{gray}{.9}
+\usepackage{hyperref}
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+
+\title{A Bayesian Hierarchical Model for Personalized Apparel Recommendation}
+
+\author{} % LEAVE BLANK FOR ORIGINAL SUBMISSION.
+          % UAI  reviewing is double-blind.
+
+% The author names and affiliations should appear only in the accepted paper.
+%
+%\author{ {\bf Harry Q.~Bovik\thanks{Footnote for author to give an
+%alternate address.}} \\
+%Computer Science Dept. \\
+%Cranberry University\\
+%Pittsburgh, PA 15213 \\
+%\And
+%{\bf Coauthor}  \\
+%Affiliation          \\
+%Address \\
+%\And
+%{\bf Coauthor}   \\
+%Affiliation \\
+%Address    \\
+%(if needed)\\
+%}
+
+
+
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Abstract.
+\end{abstract}
+
+\section{Introduction(Jerry)}
+\label{sec:intro}
+\input{intro}
+
+\section{Related Work(Chris)}
+\label{sec:related}
+\input{related}
+
+\section{Methodology(Jerry)}
+\label{sec:method}
+
+\section{Experiment(Chris)}
+\label{sec:experiment}
+\input{experiment}
+
+\section{Conclusion(Chris)}
+\label{sec:conclusion}
+
+
+%\begin{figure}[h]
+%\vspace{1in}
+%\caption{Sample Figure Caption}
+%\end{figure}
+
+%\subsubsection*{References}
+
+\bibliography{UAI2018}
+\bibliographystyle{icml2018} % temporarily
+
+\end{document}
