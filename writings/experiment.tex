@@ -2,34 +2,38 @@
 In this section, we conduct several experiments on two data sets: (1) the productional e-commerce data set; (2) the publicly available music data set.  We compare our proposed method HBayes against several other \emph{state-of-the-art} recommendation methods which are briefly described as follows:
 %\textbf{KNN} \cite{koren2010factor}:
 
-\textbf{HSR} \cite{wang2015exploring}: is an item-based recommendation approach that employs a special non-negative matrix factorization for exploring the implicit hierarchical structure of users and items so the user preference towards certain products are better understood.  We adopt HSR  as one baseline. 
+\begin{itemize}
+\item \textbf{HSR} \cite{wang2015exploring}: is an item-based recommendation approach that employs a special non-negative matrix factorization for exploring the implicit hierarchical structure of users and items so the user preference towards certain products are better understood.  We adopt HSR  as one baseline. 
 
-\textbf{HPF} \cite{gopalan2015scalable}: generates a hierarchical Poisson factorization model for better modeling users' rating towards certain items based upon each one's latent preferences.  Unlike proposed HBayes, HPF does not leverage the content item feature for constructing the hierarchical structure. We adopt HPF as another baseline.
+\item \textbf{HPF} \cite{gopalan2015scalable}: generates a hierarchical Poisson factorization model for better modeling users' rating towards certain items based upon each one's latent preferences.  Unlike proposed HBayes, HPF does not leverage the content item feature for constructing the hierarchical structure. We adopt HPF as another baseline.
 
-\textbf{SVD++} \cite{mnih2008probabilistic, koren2008factorization}: combines the collaborative filtering approach and latent factor approach, so to provide a more accurate neighboring based recommendation result.  We adopt SVD++ as another baseline.
+\item \textbf{SVD++} \cite{mnih2008probabilistic, koren2008factorization}: combines the collaborative filtering approach and latent factor approach, so to provide a more accurate neighboring based recommendation result.  We adopt SVD++ as another baseline.
 
-\textbf{CoClustering} \cite{george2005scalable}: another collaborative filtering flavored recommendation approach based on weighted co-clustering improvements that simultaneously cluster users and items.  We adopt CoClustering as another baseline.
+\item \textbf{CoClustering} \cite{george2005scalable}: another collaborative filtering flavored recommendation approach based on weighted co-clustering improvements that simultaneously cluster users and items.  We adopt CoClustering as another baseline.
 
-\textbf{Fatorization Machine (FM)} \cite{rendle2010factorization}: combines support vector machines (SVM) with factorization models which takes the advantage of SVM meanwhile overcomes the feature sparsity issues.  In this paper, we adopt LibFM implementation mentioned in \cite{rendle2012factorization} as another baseline.
+\item \textbf{Fatorization Machine (FM)} \cite{rendle2010factorization}: combines support vector machines (SVM) with factorization models which takes the advantage of SVM meanwhile overcomes the feature sparsity issues.  In this paper, we adopt LibFM implementation mentioned in \cite{rendle2012factorization} as another baseline.
 
-\textbf{LambdaMART} \cite{burges2010ranknet}: is the boosted tree version of LambdaRank \cite{donmez2009local}, which is based on RankNet \cite{burges2005learning}.  LambdaMART proves to be a very successful approach for ranking as well as recommendation.  We include LambdaMART as another baseline. 
+\item \textbf{LambdaMART} \cite{burges2010ranknet}: is the boosted tree version of LambdaRank \cite{donmez2009local}, which is based on RankNet \cite{burges2005learning}.  LambdaMART proves to be a very successful approach for ranking as well as recommendation.  We include LambdaMART as another baseline. 
+\end{itemize}
 
 \subsection{Evaluation Metrics}
 Throughout the experiment section, we compare HBayes against other baselines on the testing held-out data set under the 5-fold cross-validation setting.  For each fold, after fitting the model on the training set, we form the predictive rating for the test set, and generate the top $M$ samples from each method for recommendation.  Regarding with metrics, we adopt precision and recall as well as F1-score for measuring the product retrieval quality and normalized discounted information gain (NDCG) for measuring the recommendation's ranking quality.  More specifically, precision, recall, and F1-score are defined as follows:
 
-\begin{eqnarray}
-\text{precision}_M & = & \frac{\text{\# of products clicked in top }M}{M} \nonumber \\
-\text{recall}_M & = & \frac{\text{\# of products clicked in top }M}{\text{\# of products the user clicked}} \nonumber\\
-\text{F1-score@} M & = & 2\frac{\text{precision}_M\cdot \text{recall}_M}{\text{precision}_M + \text{recall}_M} \nonumber
-\end{eqnarray}
+\begin{itemize}
+\item Precision@K = $\frac{\mbox{\# of products clicked in top K}}{K}$ \\
+\item Recall@K = $\frac{\mbox{\# of products clicked in top K}}{\mbox{\# of products the user clicked}}$ \\
+\item F1-score@K  = $2\frac{Precision@K \cdot Recall@K}{Precision@K + Recall@K} $
+\end{itemize}
 
 discounted cumulative gain (DCG) measures the ranking quality based on the result list product positions, defined as:
 \begin{eqnarray}
-\text{DCG}_M & = & \sum_{i=1}^M\frac{r_i}{\log_2(i+1)} =  r_1 + \sum_{i=2}^M\frac{r_i}{\log_2(i+1)}\nonumber
+\text{DCG}@K & = & \sum_{i=1}^K\frac{r_i}{\log_2(i+1)} =  r_1 + \sum_{i=2}^K\frac{r_i}{\log_2(i+1)}\nonumber
 \end{eqnarray}
-sorting all potential products to produce the maximum possible DCG through position $M$, also called Ideal DCG (IDCG).  For each user, we can define NDCG as follows:
+
+sorting all potential products to produce the maximum possible DCG through position $K$, also called Ideal DCG (IDCG).  For each user, we can define NDCG as follows:
+
 \begin{eqnarray}
-\text{NDCG}_M & = & \frac{\text{DCG}_M}{\text{IDCG}_M}\nonumber
+\text{NDCG}@K & = & \frac{\text{DCG}@K}{\text{IDCG}@K}\nonumber
 \end{eqnarray}
 
 \subsection{Recommendation on E-commerce Data}
@@ -38,13 +42,15 @@ The first data set is collected from a large e-commerce company.  In this datase
 \subsubsection{Feature Analysis}
 The e-commerce data are composed by four types of features: (1) product popularity; (2) product category; (3) product title; (4) product properties and we briefly explain their physical meanings and how we preprocess the data as follows:
 
-\textbf{Product Popularity (POP):} product popularity is a measure of the prevalence of a product in the dataset. In general, consumers have a preference for a particular product during a period of time. This phenomenon is pretty common in apparel product. For a particular product $i$, the popularity is computed as follows: $\mathrm{\scriptsize POP}_{i} \coloneqq \frac{n_{x_i}}{\mathcal{N}_\mathbf{x}}$, where $n_{x_i}$ are the number of orders or the contribution of gross merchandise volume (GMV) for product $i$,  and $\mathcal{N}_\mathbf{x} = \sum_{\forall x_i}n_{x_i}$ is the summation of $n_{x_i}$ for all such products in the dataset.
+\begin{itemize}
+\item \textbf{Product Popularity} (POP): product popularity is a measure of the prevalence of a product in the dataset. In general, consumers have a preference for a particular product during a period of time. This phenomenon is pretty common in apparel product. For a particular product $i$, the popularity is computed as follows: $\mathrm{\scriptsize POP}_{i} \coloneqq \frac{n_{x_i}}{\mathcal{N}_\mathbf{x}}$, where $n_{x_i}$ are the number of orders or the contribution of gross merchandise volume (GMV) for product $i$,  and $\mathcal{N}_\mathbf{x} = \sum_{\forall x_i}n_{x_i}$ is the summation of $n_{x_i}$ for all such products in the dataset.
 
-\textbf{Product Category (CID):}  user actions towards a single item such as click, purchase, etc. are typically sparse event, while more patterns could be recognized if we cluster different items into different groups based on their functionalities and utilities.  In most e-commerce websites, such a categorical hierarchy exists.    We encode each product's category into a high dimensional vector via one-hot encoding and adjust the feature weights by the popularity of such category.
+\item \textbf{Product Category} (CID): user actions towards a single item such as click, purchase, etc. are typically sparse event, while more patterns could be recognized if we cluster different items into different groups based on their functionalities and utilities.  In most e-commerce websites, such a categorical hierarchy exists.    We encode each product's category into a high dimensional vector via one-hot encoding and adjust the feature weights by the popularity of such category.
 
-\textbf{Product Title (TITLE):} product titles are created by vendors and they are typically in the forms of natural languages indicating the product functionality and utility.  Examples could be like 'INMAN short sleeve round neck triple color block stripe T-shirt 2017'.  We preprocess the product titles by generating the sentence vector embedding based on \cite{de2016representation}.  The main idea is to average the word weights in the title sentence based on the inverse document frequency (IDF) value of each individual word involved.
+\item \textbf{Product Title} (TITLE): product titles are created by vendors and they are typically in the forms of natural languages indicating the product functionality and utility.  Examples could be like 'INMAN short sleeve round neck triple color block stripe T-shirt 2017'.  We preprocess the product titles by generating the sentence vector embedding based on \cite{de2016representation}.  The main idea is to average the word weights in the title sentence based on the inverse document frequency (IDF) value of each individual word involved.
 
-\textbf{Product Property Features (PROP):} other product metadata features are also provided in this dataset. For example,  product 'color' feature takes value of "black", "white", "red", etc, and product 'size' feature takes value of "S", "M", "L", "XL", etc.  Similar as category features, each product property is first encoded as a binary vector $\bm{x}_i \in \{0, 1\}^{|N|}$, where $N$ denotes the set of all possible corresponding product values.  Then we encode all property binary vectors into a fixed length ($50$ throughout the experiment) vector. %We can see the property features vector is generally sparse since each product is only associated with a small number of feature.  % how did we do the encoding??
+\item \textbf{Product Property Features} (PROP): other product metadata features are also provided in this dataset. For example,  product color feature takes value of ``black", ``white", ``red", etc, and product 'size' feature takes value of ``S", ``M", ``L", ``XL", etc.  Similar as category features, each product property is first encoded as a binary vector $\bm{x}_i \in \{0, 1\}^{|N|}$, where $N$ denotes the set of all possible corresponding product values.  Then we encode all property binary vectors into a fixed length ($50$ throughout the experiment) vector. %We can see the property features vector is generally sparse since each product is only associated with a small number of feature.  % how did we do the encoding??
+\end{itemize}
 
 On one hand by utilizing more types of product features HBayes in general reaches better results in terms of precision-recall metrics.  We report PR-AUC in table (\ref{tab:features_cmp}) to prove our argument.   On the other hand, more features typically needs much more training time.  Figure (\ref{fig:train_time_cmp}) reports the change in likelihood comparing against training time (minutes) for each feature combination case \footnote{The experiment is conducted via the same linux qual core 2.8 GHz Intel Core i7 macbook with 16 Giggabytes of memory}.   It is shown that by taking one POP feature set, model takes less than 5 minutes to converge while taking feature combination POP+CID+TITLE+PROP leaves us more than 6 hours in training.   
 
