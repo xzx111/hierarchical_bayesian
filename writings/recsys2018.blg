@@ -21,6 +21,8 @@ Warning--empty publisher in gopalan2015scalable
 Warning--empty address in gopalan2015scalable
 Warning--require articleno with numpages field in Gultekin_acollaborative
 Warning--require articleno with numpages field in Guy:2009
+Warning--empty publisher in jaakkola1997variational
+Warning--empty address in jaakkola1997variational
 Warning--empty publisher in koren2008factorization
 Warning--empty address in koren2008factorization
 Warning--require articleno with numpages field in Koren:2010
@@ -41,45 +43,45 @@ Warning--empty address in Yin:2011
 Warning--require articleno with numpages field in Yin:2011
 Warning--empty publisher in zhang2007efficient
 Warning--empty address in zhang2007efficient
-You've used 28 entries,
+You've used 30 entries,
             5551 wiz_defined-function locations,
-            1484 strings with 21045 characters,
-and the built_in function-call counts, 30706 in all, are:
-= -- 3683
-> -- 1246
+            1497 strings with 21445 characters,
+and the built_in function-call counts, 32872 in all, are:
+= -- 3963
+> -- 1336
 < -- 0
-+ -- 382
-- -- 424
-* -- 2307
-:= -- 3357
-add.period$ -- 140
-call.type$ -- 28
-change.case$ -- 200
-chr.to.int$ -- 28
-cite$ -- 63
-duplicate$ -- 2613
-empty$ -- 1855
-format.name$ -- 512
-if$ -- 7369
++ -- 414
+- -- 456
+* -- 2467
+:= -- 3591
+add.period$ -- 150
+call.type$ -- 30
+change.case$ -- 214
+chr.to.int$ -- 30
+cite$ -- 67
+duplicate$ -- 2788
+empty$ -- 1981
+format.name$ -- 552
+if$ -- 7904
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 123
-newline$ -- 259
-num.names$ -- 224
-pop$ -- 1047
+missing$ -- 132
+newline$ -- 274
+num.names$ -- 240
+pop$ -- 1122
 preamble$ -- 1
-purify$ -- 340
+purify$ -- 364
 quote$ -- 0
-skip$ -- 736
+skip$ -- 785
 stack$ -- 0
-substring$ -- 2315
-swap$ -- 281
+substring$ -- 2461
+swap$ -- 297
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 380
-warning$ -- 35
-while$ -- 225
+type$ -- 408
+warning$ -- 37
+while$ -- 241
 width$ -- 0
-write$ -- 532
-(There were 35 warnings)
+write$ -- 566
+(There were 37 warnings)
