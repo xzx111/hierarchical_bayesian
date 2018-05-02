@@ -177,6 +177,31 @@
 \showISBNx{978-1-60558-435-5}
 
 
+\bibitem[\protect\citeauthoryear{Jaakkola and Jordan}{Jaakkola and
+  Jordan}{1997}]%
+        {jaakkola1997variational}
+\bibfield{author}{\bibinfo{person}{T Jaakkola} {and} \bibinfo{person}{M
+  Jordan}.} \bibinfo{year}{1997}\natexlab{}.
+\newblock \showarticletitle{A variational approach to Bayesian logistic
+  regression models and their extensions}. In \bibinfo{booktitle}{{\em Sixth
+  International Workshop on Artificial Intelligence and Statistics}},
+  Vol.~\bibinfo{volume}{82}. \bibinfo{pages}{4}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Jordan, Ghahramani, Jaakkola, and Saul}{Jordan
+  et~al\mbox{.}}{1999}]%
+        {jordan1999introduction}
+\bibfield{author}{\bibinfo{person}{Michael~I Jordan}, \bibinfo{person}{Zoubin
+  Ghahramani}, \bibinfo{person}{Tommi~S Jaakkola}, {and}
+  \bibinfo{person}{Lawrence~K Saul}.} \bibinfo{year}{1999}\natexlab{}.
+\newblock \showarticletitle{An introduction to variational methods for
+  graphical models}.
+\newblock \bibinfo{journal}{{\em Machine learning\/}} \bibinfo{volume}{37},
+  \bibinfo{number}{2} (\bibinfo{year}{1999}), \bibinfo{pages}{183--233}.
+\newblock
+
+
 \bibitem[\protect\citeauthoryear{Koren}{Koren}{2008}]%
         {koren2008factorization}
 \bibfield{author}{\bibinfo{person}{Yehuda Koren}.}
