@@ -1,4 +1,4 @@
-In this section, we conduct several experiments on two data sets: (1) the productional e-commerce data set; (2) the publicly available music data set.  We compare HBayes against several other \emph{state-of-the-art} recommendation methods which are briefly mentioned as follows:
+In this section, we conduct several experiments on two data sets: (1) the productional e-commerce apparel data set; (2) the publicly available music data set.  For both data sets, we compare HBayes against several other \emph{state-of-the-art} recommendation methods which are briefly mentioned as follows:
 
 {\noindent\textbf{HSR} \cite{wang2015exploring}: is an item-based recommendation approach that employs a special non-negative matrix factorization for exploring the implicit hierarchical structure of users and items so the user preference towards certain products are better understood.  We adopt HSR  as one baseline. \newline
 \textbf{HPF} \cite{gopalan2015scalable}: generates a hierarchical Poisson factorization model for better modeling users' rating towards certain items based upon each one's latent preferences.  Unlike proposed HBayes, HPF does not leverage the content item feature for constructing the hierarchical structure. We adopt HPF as another baseline. \newline
@@ -8,7 +8,7 @@ In this section, we conduct several experiments on two data sets: (1) the produc
 \textbf{LambdaMART} \cite{burges2010ranknet}: is the boosted tree version of LambdaRank \cite{donmez2009local}, which is based on RankNet \cite{burges2005learning}.  LambdaMART proves to be a very successful approach for ranking as well as recommendation.  We include LambdaMART as another baseline. \newline}
 
 \subsection{Evaluation Metrics}
-Throughout the experiment section, we compare HBayes against other baselines on the testing held-out data set under the 5-fold cross-validation setting.  For each fold, after fitting the model on the training set, we form the predictive rating for the test set, and generate the top $M$ samples from each method for recommendation.  Regarding with metrics, we adopt precision and recall as well as F1-score for measuring the product retrieval quality and normalized discounted information gain (NDCG) for measuring the recommendation's ranking quality.  More specifically, precision, recall, and F1-score are defined as follows:
+Throughout the experiments, we compare HBayes against other baselines on the testing held-out data set under the 5-folds cross-validation settings.  For each fold, after fitting the model on the training set, we rank on the test set by each model, and generate the top M samples with maximal ranking scores for recommendation.  Regarding metrics, we adopt precisions and recalls as well as F1-scores for evaluating the product retrieval quality and normalized discounted information gain (NDCG) for the recommendation's ranking quality.  More specifically, precisions, recalls, and F1-scores are defined as follows:
 
 \begin{eqnarray}
 \text{Precision@K} & = & \frac{\text{\# of products clicked in top K}}{\text{K}} \nonumber \\
@@ -16,32 +16,32 @@ Throughout the experiment section, we compare HBayes against other baselines on 
 \text{F1-score@K} & = & 2\cdot\frac{\text{Precision@K} \cdot \text{Recall@K}}{\text{Precision@K} + \text{Recall@K}}  \nonumber
 \end{eqnarray}
 
-discounted cumulative gain (DCG) measures the ranking quality based on the result list product positions, defined as:
+discounted cumulative gain (DCG) measures the ranking quality based on the item positions from the resulting list, which is defined as follows:
 \begin{eqnarray}
 \text{DCG@K} & = & \sum_{i=1}^K\frac{r_i}{\log_2(i+1)} =  r_1 + \sum_{i=2}^K\frac{r_i}{\log_2(i+1)}\nonumber
 \end{eqnarray}
 
-sorting all potential products to produce the maximum possible DCG through position K, also called Ideal DCG (IDCG).  For each user, we can define NDCG as follows:
+re-rank all potential products to produce the ideal maximal possible DCG through out first K items, and its correspoding DCG score is called the ideal discounted cumulative gain (IDCG).  By using both DCG and IDCG, the normalized discounted cumulative gain (NDCG) could be defined as follows:
 
 \begin{eqnarray}
 \text{NDCG@K} & = & \frac{\text{DCG@K}}{\text{IDCG@K}}\nonumber
 \end{eqnarray}
 
-\subsection{Recommendation on E-commerce Data}
-The first data set is collected from a large e-commerce company.  In this dataset, each sample represents a particular product item which is recorded by various features including: categories, titles, and other properties, etc.  Meanwhile, the user click information are also recorded and translated into data labels. Throughout the experiment, positive labels indicate that certain products in recommendation are clicked by the user, whereas negative samples indicate that products in recommendation are skipped by the user which usually implies that user is `lack of interest' towards that certain item.  By data cleaning and preprocessing for merging duplicated histories, removing users with too few historical samples, the final data set ends up of $\mathbf{895}$ users, $\mathbf{81223}$ products, $\mathbf{5535}$ brands with $\mathbf{380595}$ uniquely observed user-item pairs.  In average, each user has $\mathbf{425}$ products records, ranging from $\mathbf{105}$ to $\mathbf{2048}$, and $\mathbf{61.2\%}$ of the users have fewer than $\mathbf{425}$ product clicking records.  For each product, we encode each popularity and category features to a separate $\mathbf{20}$ dimension vector; title and product property feature to a separate $\mathbf{50}$ dimension vector.   The total dimension for each product sample ends up of $\mathbf{140}$.
+\subsection{Recommendation on Apparel Data}
+The first apparel data set is collected from a large e-commerce company.  In this dataset, each sample represents a particular apparel product which is recorded by various features including: categories, titles, and other properties, etc.  Meanwhile, the user click information are also recorded and translated into data labels. Throughout the experiment, positive labels indicate that certain recommended products are clicked by the user, whereas negative samples indicate that the recommended products are skipped by the user which usually implies that the user is `lack of interest' towards that certain item.  By data cleaning and preprocessing of (1) merging duplicated histories; (2) removing users of too few records, the post-processed data set ends up with $\mathbf{895}$ users, $\mathbf{81223}$ products, $\mathbf{5535}$ brands with $\mathbf{380595}$ uniquely observed user-item pairs.  In average, each user has $\mathbf{425}$ products records, ranging from $\mathbf{105}$ to $\mathbf{2048}$, and $\mathbf{61.2\%}$ of the users have fewer than $\mathbf{425}$ product clicking records.  For each item, we encode the popularity and category features into a $\mathbf{20}$ dimensional feature vector; title and product property into a $\mathbf{50}$ dimensional feature vector.  Combining with other features, the total dimension for each sample ends up with $\mathbf{140}$.
 
 \subsubsection{Feature Analysis}
-The e-commerce data are composed by four types of features: (1) product popularity; (2) product category; (3) product title; (4) product properties and we briefly explain their physical meanings and how we preprocess the data as follows:
+The apparel data are composed of four types of features: (1) product popularity; (2) product category; (3) product title; (4) product properties.  We briefly explain each feature's physical meaning and how we process the data as follows:
 
-\textbf{Product Popularity} (POP): product popularity is a measure of the prevalence of a product in the dataset. In general, consumers have a preference for a particular product during a period of time. This phenomenon is pretty common in apparel product. For a particular product $i$, the popularity is computed as follows: $\mathrm{\scriptsize POP}_{i} \coloneqq \frac{n_{x_i}}{\mathcal{N}_\mathbf{x}}$, where $n_{x_i}$ are the number of orders or the contribution of gross merchandise volume (GMV) for product $i$,  and $\mathcal{N}_\mathbf{x} = \sum_{\forall x_i}n_{x_i}$ is the summation of $n_{x_i}$ for all such products in the dataset. \newline
+\textbf{Product Popularity} (POP): product popularity is a measure of the prevalence of a item in the dataset. In general, consumers have preferences for a particular product during a period of time. This phenomenon is pretty common for apparel products (\emph{e.g.} apparels in certain styles may be of dominant prevalence especially when famous entertainers are wearing them). For a particular product $i$, the popularity is defined as: $\mathrm{\scriptsize POP}_{i} \coloneqq \frac{n_{x_i}}{\mathcal{N}_\mathbf{x}}$, where $n_{x_i}$ are the number of orders or the contribution of gross merchandise volume (GMV) for product $i$,  and $\mathcal{N}_\mathbf{x} = \sum_{\forall x_i}n_{x_i}$ is the summation of $n_{x_i}$ for all such products in the dataset. \newline
 
-\textbf{Product Category} (CID): user actions towards a single item such as click, purchase, etc. are typically sparse event, while more patterns could be recognized if we cluster different items into different groups based on their functionalities and utilities.  In most e-commerce websites, such a categorical hierarchy exists.    We encode each product's category into a high dimensional vector via one-hot encoding and adjust the feature weights by the popularity of such category. \newline
+\textbf{Product Category} (CID): In e-commerce, items are clustered into different groups based on the alliance/ similarity of the item functionalities and utilities.  In e-commerce websites, such an explicit hierarchy usually exists.  We encode each item's category into a high dimensional vector via one-hot encoding and adjust the feature weights by the popularity of such category. \newline
 
-\textbf{Product Title} (TITLE): product titles are created by vendors and they are typically in the forms of natural languages indicating the product functionality and utility.  Examples could be like 'INMAN short sleeve round neck triple color block stripe T-shirt 2017'.  We preprocess the product titles by generating the sentence vector embedding based on \cite{de2016representation}.  The main idea is to average the word weights in the title sentence based on the inverse document frequency (IDF) value of each individual word involved. \newline
+\textbf{Product Title} (TITLE): product titles are created by vendors and they are typically in the forms of natural languages indicating the product functionality and utility.  Examples could be like `\emph{INMAN short sleeve round neck triple color block stripe T-shirt 2017}'.  We preprocess the product titles by generating the sentence vector embedding based on \cite{de2016representation}.  The main idea is to average the wording weights in the title sentence based on the inverse document frequency (IDF) value of each individual word involved. \newline
 
-\textbf{Product Property Features} (PROP): other product metadata features are also provided in this dataset. For example,  product color feature takes value of ``black", ``white", ``red", etc, and product 'size' feature takes value of ``S", ``M", ``L", ``XL", etc.  Similar as category features, each product property is first encoded as a binary vector $\bm{x}_i \in \{0, 1\}^{|N|}$, where $N$ denotes the set of all possible corresponding product values.  Then we encode all property binary vectors into a fixed length ($50$ throughout the experiment) vector. \newline
+\textbf{Product Property Features} (PROP): other product metadata features are also provided in the apparel dataset. For instance, the color feature of items takes value like: `black', `white', `red', etc, and the sizing feature takes value like `S', `M', `L', `XL', etc.  Similar as category features, each product property is first encoded into a binary vector $\bm{x}_i \in \{0, 1\}^{|N|}$, where $N$ denotes the set of all possible corresponding product values.  Then we encode all such property binary vectors into a fixed length ($50$) vector. \newline
 
-On one hand by utilizing more types of product features HBayes in general reaches better results in terms of precision-recall metrics.  We report PR-AUC in table (\ref{tab:features_cmp}) to prove our argument.   On the other hand, more features typically needs much more training time.  Figure (\ref{fig:train_time_cmp}) reports the change in likelihood comparing against training time (minutes) for each feature combination case \footnote{The experiment is conducted via the same linux qual core 2.8 GHz Intel Core i7 macbook with 16 Giggabytes of memory}.   It is shown that by taking one POP feature set, model takes less than 5 minutes to converge while taking feature combination POP+CID+TITLE+PROP leaves us more than 6 hours in training.   
+On one hand, by utilizing more features HBayes in general reaches better performance in terms of precision-recall metrics.  We report PR-AUC in table (\ref{tab:features_cmp}) to prove this argument; on the other hand, more features needs much more training time.  Figure (\ref{fig:train_time_cmp}) reports the changes in likelihood against training time cost (in minutes) for each feature use cases\footnote{The experiment is conducted via the same linux qual core 2.8 GHz Intel Core i7 macbook with 16 Giggabytes of memory}.   It is shown that by only taking POP features, model spends less than 5 minutes to converge while taking POP+CID+TITLE+PROP features, the model needs more than 6 hours in training.   
 
 \begin{table}[htb]
 \centering
@@ -68,15 +68,18 @@ POP+CID+TITLE+PROP & 0.0491 \\
 \begin{figure*}[!htb]
 \minipage{0.32\textwidth}
   \includegraphics[width=\linewidth]{fig/F1-score_jd}
-  \caption{F1@K on \emph{Apparel} data.}\label{fig:awesome_image1}
+  \caption{F1@K on \emph{Apparel} data.}
+  \label{fig:perf_cmp_F1_apparel}
 \endminipage\hfill
 \minipage{0.32\textwidth}
   \includegraphics[width=\linewidth]{fig/precision_jd}
-  \caption{Precision@K on \emph{Apparel} data.}\label{fig:awesome_image2}
+  \caption{Precision@K on \emph{Apparel} data.}
+  \label{fig:perf_cmp_precision_apparel}
 \endminipage\hfill
 \minipage{0.32\textwidth}%
   \includegraphics[width=\linewidth]{fig/recall_jd}
-  \caption{Recall@K on \emph{Apparel} data.}\label{fig:awesome_image3}
+  \caption{Recall@K on \emph{Apparel} data.}
+  \label{fig:perf_cmp_recall_apparel}
 \endminipage
 \end{figure*}
 
@@ -84,15 +87,18 @@ POP+CID+TITLE+PROP & 0.0491 \\
 \begin{figure*}[!htb]
 \minipage{0.32\textwidth}
   \includegraphics[width=\linewidth]{fig/F1-score_music}
-  \caption{F1@K on \emph{Music} data.}\label{fig:awesome_image1}
+  \caption{F1@K on \emph{Music} data.}
+  \label{fig:perf_cmp_F1_music}
 \endminipage\hfill
 \minipage{0.32\textwidth}
   \includegraphics[width=\linewidth]{fig/precision_music}
-  \caption{Precision@K on \emph{Music} data.}\label{fig:awesome_image2}
+  \caption{Precision@K on \emph{Music} data.}
+  \label{fig:perf_cmp_precision_music}
 \endminipage\hfill
 \minipage{0.32\textwidth}%
   \includegraphics[width=\linewidth]{fig/recall_music}
-  \caption{Recall@K on \emph{Music} data.}\label{fig:awesome_image3}
+  \caption{Recall@K on \emph{Music} data.}
+  \label{fig:perf_cmp_recall_music}
 \endminipage
 \end{figure*}
 
@@ -101,38 +107,6 @@ POP+CID+TITLE+PROP & 0.0491 \\
 \caption{Training time under different feature combinations on e-commerce recommendations}
 \label{fig:train_time_cmp}
 \end{figure}
-
-% \begin{figure}[htb]
-% \includegraphics[width=0.9\columnwidth,height=0.5\columnwidth]{fig/pre-recall}
-% \caption{PR curves on e-commerce recommendations}
-% \label{fig:perf_cmp}
-% \end{figure}
-
-% \begin{table}[htb]
-% \begin{center}
-% \scalebox{0.7}{
-% \begin{tabular}{l|cccc}
-% \toprule
-% \textbf{Method} & \textbf{F1-score@5} & \textbf{F1-score@10} & \textbf{F1-score@25} & \textbf{F1-score@50} \\
-% \hline
-% \rowcolor{mygray}
-% CoClustering & 0.0640 & 0.0804 & 0.0896 & 0.0809 \\
-% NMF & 0.0565 & 0.0702 & 0.0832 & 0.0809 \\
-% \rowcolor{mygray}
-% SVD++ & 0.0467 & 0.0689 & 0.0875 & 0.0865\\
-% HSR & 0.0592 & 0.0755 & 0.0889 & 0.0850\\
-% \rowcolor{mygray}
-% HPF & 0.0741 & 0.0874 & 0.0960 & 0.0876\\
-% FM & 0.0720 & 0.0756 & 0.0874 & 0.0880\\
-% \rowcolor{mygray}
-% LambdaMART & 0.0667 & 0.0782 & 0.0879 & 0.0874\\
-% HBayes & \textbf{0.0885} & \textbf{0.1065} & \textbf{0.1168} & \textbf{0.1002}\\
-% \bottomrule
-% \end{tabular}}
-% \end{center}
-% \caption{F1-score on e-commerce recommendations}
-% \label{F!-score_cmp}
-% \end{table}
 
 \begin{table}[htb]
 \begin{center}
@@ -156,14 +130,14 @@ HBayes & \textbf{0.1557} & \textbf{0.1974} & \textbf{0.2871} & \textbf{0.3590}\\
 \bottomrule
 \end{tabular}}
 \end{center}
-\caption{NDCG on e-commerce recommendations}
+\caption{NDCG on apparel recommendations}
 \label{NDCG_cmp}
 \end{table}
 
 \subsubsection{Performance Comparison}
-We first report the model performance regarding precision-recall for HBayes and other baselines in Figure (\ref{fig:perf_cmp}).  As shown when each method recommend fewer number of products, HBayes, FM, shares similar performance, with the increment of recommended items, HBayes becomes more efficient, in the sense of picking more number of products that users take interest in.  In terms of overall PR-AUC, HBayes is able to reach $0.053$, while beating the second best LambdaMART of $0.041$ PR-AUC by $29.3\%$ percent.   In terms of F1-score, we are the best cross out different number of products recommended by beating against the second best LambdaMART by $29\%$ in average.  
+We first report the model performance regarding precision, recall, as well as F1-score for HBayes against other baselines in Figure (\ref{fig:perf_cmp_F1_apparel},\ref{fig:perf_cmp_precision_apparel},\ref{fig:perf_cmp_recall_apparel}).  As shown when each method recommend fewer number of products (K = 5), HBayes does not show the superiority regarding with recalls, with the increment of recommended items, the recall for HBayes becomes much better against others, which implies HBayes is really efficient in terms of finding items that people tend to take interest in.  In the sense of precision, HBayes is consistantly better than other baseline methods which implies HBayes is much more accurate in terms of item classification.   Given the performance of precisions and recalls, HBayes is much better regarding F1-score with different K for apparel recommendation.
 
-Regarding with ranking quality, HBayes is also superior against other baselines through out different items recommended.  Specially HBayes beats the second best CoClustering at $M=5,10,25$ by $21.0\%$ in average and LambdaMART at $M=50$ by $15.0\%$.  
+Regarding the ranking quality, we use NDCG to report each method's performance in Table (\ref{NDCG_cmp}).  HBayes is superior against other baseline methods through out different K recommended.  Specially, HBayes beats the second best HPF at $\text{K}=5$ by $10.3\%$, at $\text{K}=10$ by $12.4\%$, at $\text{K}=25$ by $14.7\%$ and at $\text{K}=50$ by $11.2\%$.  
 
 \subsubsection{Model Learning Analysis}
 \begin{figure}
@@ -173,49 +147,17 @@ Regarding with ranking quality, HBayes is also superior against other baselines 
 \label{fig:tsne-represntation-style-cluster}
 \end{figure}
 
-Like mentioned in Sec.\ref{sec:method}, HBayes learns the latent style clusters, and group different brands of products based on their different hidden style representations.  Figure (\ref{fig:tsne-represntation-style-cluster}) shows the tSNE\cite{maaten2008visualizing} representation of different style clusters learned by HBayes and we randomly pick four samples within each clusters and present their product images at the right subfigure.  As shown, cluster one which takes a great proportion of apparel products are seemingly about young stylish female garment.  This is making sense since a majority of apparel customers are young females while most products are focusing on this group of customer audience.    The second cluster seems about senior customers who are in elder age.   Interestingly, the third cluster and the fourth cluster which are closed tied together are both about young male customers.  However, the third cluster seems more focusing on office business men style garment while the fourth cluster is more focusing on asian street styles.  This indicates us that our hierarchical Bayesian model does learn meaningful intrinsic garment styles from apperal products with customer behavioral data.   
+Like mentioned in Sec.\ref{sec:method}, HBayes learns the latent style clusters, and group different brands of products based on their different hidden style representations.  Figure (\ref{fig:tsne-represntation-style-cluster}) shows the tSNE \cite{maaten2008visualizing} representations for different apparel clusters learned by HBayes and we randomly pick $4$ samples out of each cluster and display their product images at the right subfigure.  As shown, cluster one taking the majority proportion of apparel items seems about stylish female youth garment.  This intuitively makes sense since the majority of apparel customers are female youth for e-commerce websites; as a result, most apparels are also focusing on female customer audience.    The second cluster seems about senior customers who are elder in age.   Interestingly, the third cluster and the fourth cluster which are closely tied up are both about male customer youth.  However, the third cluster seems focusing more on office business garment while the fourth cluster seems more about K-pop street styles.  This indicates us that the HBayes indeed learns the meaningful intrinsic garment styles from apparel items by leveraging customer behavior data.   
 
 \subsection{Recommendation on Last.fm Music Data}
-The second data set is collected from Last.fm dataset \cite{Celma:Springer2010} and Free Music Archive (FMA) \cite{FMA}. Last.fm is a publicly available dataset contains the whole listening habits (till May, 5th 2009) for $1,000$ users. FMA is an open and easily accessible dataset providing $917$ GiB and $343$ days of Creative Commons-licensed audio from $106,574$ tracks, $16,341$ artists and $14,854$ albums, arranged in a hierarchical taxonomy of $161$ genres. It also provides full-length and high quality audios with precomputed features.  In our experiment, tracks in Last.fm dataset were further intersected with FMA dataset for better feature generation.  The resulting dataset contains $500$ users, $16,328$ tracks and $36$ genres.
+The second data set is collected from Last.fm dataset \cite{Celma:Springer2010} and Free Music Archive (FMA) \cite{FMA}. Last.fm is a publicly available dataset which contains the whole listening habits (till May, 5th 2009) for $\mathbf{1000}$ users. FMA is an open and easily accessible dataset providing $\mathbf{917}$ GiB and $\mathbf{343}$ days of Creative Commons-licensed audio from $\mathbf{106574}$ tracks, $\mathbf{16341}$ artists and $\mathbf{14854}$ albums, arranged in a hierarchical taxonomy of $\mathbf{161}$ genres. It also provides full-length and high quality audios with precomputed features.  In our experiment, tracks in Last.fm dataset were further intersected with FMA dataset for better feature generation.  The resulting dataset contains $\mathbf{500}$ users, $\mathbf{16328}$ tracks and $\mathbf{36}$ genres.
 
 \subsubsection{Performance Comparison}
-We conduct the same set of experiments as we do for e-commerce data and report different precision-recall performances in Figure (\ref{fig:perf_cmp_music}).  
+We conduct similar experiments as we do for apparel data set and report precisions, recalls as well as F1-scores in Figure (\ref{fig:perf_cmp_F1_music},\ref{fig:perf_cmp_precision_music},\ref{fig:perf_cmp_recall_music}).  Although HPF and HBayes share similar performance regarding recalls along with different K, HBayes is dominant for precision at different K, specially when K is small (5, 10), which indicates HBayes is very efficient and precise for helping users pick up the songs they prefer even when the recommended item lists are short.   Combining the two, HBayes is superior in F1-scores for different K recommended.  
 
-
-% \begin{figure}[htb]
-% \includegraphics[width=0.9\columnwidth,height=0.5\columnwidth]{fig/Pre-recall_music}
-% \caption{PR curves on Last.fm recommendations}
-% \label{fig:perf_cmp_music}
-% \end{figure}
-
-% \begin{table}[htb]
-% \label{F1-score_cmp_music}
-% \begin{center}
-% \scalebox{0.7}{
-% \begin{tabular}{l|cccc}
-% \toprule
-% \textbf{Method} & \textbf{F1-score@5} & \textbf{F1-score@10} & \textbf{F1-score@25} & \textbf{F1-score@50} \\
-% \hline
-% \rowcolor{mygray}
-% CoClustering & 0.0831 & 0.0986 & 0.1049 & 0.0915 \\
-% NMF & 0.0913 & 0.1088 & 0.1075 & 0.0941 \\
-% \rowcolor{mygray}
-% SVD++ & 0.0903 & 0.1084 & 0.1084 & 0.0946\\
-% HSR & 0.0916 & 0.1089 & 0.1083 & 0.949\\
-% \rowcolor{mygray}
-% FPF & 0.0931 & 0.1097 & 0.1092 & 0.961\\
-% FM & 0.0863 & 0.1041 & 0.1059 & 0.942\\
-% \rowcolor{mygray}
-% LambdaMART & 0.0622 & 0.0788 & 0.0995 & 0.0987\\
-% HBayes & \textbf{0.0962} & \textbf{0.1159} & \textbf{0.1107} & \textbf{0.0985} \\
-% \bottomrule
-% \end{tabular}}
-% \caption{F1-score on Last.fm recommendations}
-% \end{center}
-% \end{table}
+In terms of ranking quality, we report the NDCG performance in Table (\ref{NDCG_cmp_music}).  Similar as e-commerce apparel data, HBayes is the best approach and HPF is the second best one throughout different K items recommended.  Specifically, HBayes beats HPF for $2.7\%$ at $\text{K}=5$, $4.3\%$ at $\text{K}=10$, $2.1\%$ at $\text{K}=25$, and $2.5\%$ at $\text{K}=50$ separately.
 
 \begin{table}[htb]
-\label{NDCG_cmp_music}
 \begin{center}
 \scalebox{0.7}{
 \begin{tabular}{l|cccc}
@@ -237,10 +179,11 @@ HBayes & \textbf{0.2655} & \textbf{0.2620} & \textbf{0.2455} & \textbf{0.2537}\\
 \bottomrule
 \end{tabular}}
 \caption{NDCG on Last.fm recommendations}
+\label{NDCG_cmp_music}
 \end{center}
 \end{table}
 
-For PR-AUC, HBayes (0.055) again beats against the second best, which is LambdaMART (0.043) by $27.9\%$.  In terms of F1-score, HBayes in average beats against LambdaMART by $14.0\%$.  Regarding with the ranking quality, HBayes beats against the second best, which is NMF  for $M=5,10,25$ by $4.20\%$ in average and SVD++ for $M=50$ by $4.02\%$.  
+%For PR-AUC, HBayes (0.055) again beats against the second best, which is LambdaMART (0.043) by $27.9\%$.  In terms of F1-score, HBayes in average beats against LambdaMART by $14.0\%$.  Regarding with the ranking quality, HBayes beats against the second best, which is NMF  for $M=5,10,25$ by $4.20\%$ in average and SVD++ for $M=50$ by $4.02\%$.  
 
 
 
