@@ -5,8 +5,14 @@ The style file: ACM-Reference-Format.bst
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
 Database file #1: recsys2018.bib
+Repeated entry---line 924 of file recsys2018.bib
+ : @article{blei2003latent
+ :                        ,
+I'm skipping whatever remains of this entry
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Warning--require articleno with numpages field in Ben-Elazar:2017
+Warning--no number and no volume in bishop2006pattern
+Warning--page numbers missing in both pages and numpages fields in bishop2006pattern
 Warning--empty publisher in burges2005learning
 Warning--empty address in burges2005learning
 Warning--empty address in Celma:Springer2010
@@ -47,45 +53,45 @@ Warning--empty address in Yin:2011
 Warning--require articleno with numpages field in Yin:2011
 Warning--empty publisher in zhang2007efficient
 Warning--empty address in zhang2007efficient
-You've used 32 entries,
+You've used 36 entries,
             5551 wiz_defined-function locations,
-            1506 strings with 21829 characters,
-and the built_in function-call counts, 35026 in all, are:
-= -- 4231
-> -- 1440
+            1533 strings with 22582 characters,
+and the built_in function-call counts, 39119 in all, are:
+= -- 4870
+> -- 1562
 < -- 0
-+ -- 446
-- -- 488
-* -- 2639
-:= -- 3829
-add.period$ -- 160
-call.type$ -- 32
-change.case$ -- 230
-chr.to.int$ -- 32
-cite$ -- 73
-duplicate$ -- 2957
-empty$ -- 2103
-format.name$ -- 592
-if$ -- 8434
++ -- 478
+- -- 528
+* -- 2907
+:= -- 4234
+add.period$ -- 180
+call.type$ -- 36
+change.case$ -- 254
+chr.to.int$ -- 36
+cite$ -- 79
+duplicate$ -- 3278
+empty$ -- 2341
+format.name$ -- 640
+if$ -- 9510
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 141
-newline$ -- 289
-num.names$ -- 256
-pop$ -- 1199
+missing$ -- 157
+newline$ -- 321
+num.names$ -- 288
+pop$ -- 1305
 preamble$ -- 1
-purify$ -- 390
+purify$ -- 434
 quote$ -- 0
-skip$ -- 829
+skip$ -- 929
 stack$ -- 0
-substring$ -- 2595
-swap$ -- 311
+substring$ -- 2918
+swap$ -- 346
 text.length$ -- 0
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 436
-warning$ -- 41
-while$ -- 252
+type$ -- 492
+warning$ -- 43
+while$ -- 285
 width$ -- 0
-write$ -- 599
-(There were 41 warnings)
+write$ -- 666
+(There was 1 error message)

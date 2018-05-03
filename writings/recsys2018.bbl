@@ -54,6 +54,30 @@
 \showISBNx{978-1-4503-4675-7}
 
 
+\bibitem[\protect\citeauthoryear{Bishop}{Bishop}{2006}]%
+        {bishop2006pattern}
+\bibfield{author}{\bibinfo{person}{Christopher~M Bishop}.}
+  \bibinfo{year}{2006}\natexlab{}.
+\newblock \showarticletitle{Pattern recognition and machine learning
+  (information science and statistics) springer-verlag new york}.
+\newblock \bibinfo{journal}{{\em Inc. Secaucus, NJ, USA\/}}
+  (\bibinfo{year}{2006}).
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Blei, Ng, and Jordan}{Blei
+  et~al\mbox{.}}{2003}]%
+        {blei2003latent}
+\bibfield{author}{\bibinfo{person}{David~M Blei}, \bibinfo{person}{Andrew~Y
+  Ng}, {and} \bibinfo{person}{Michael~I Jordan}.}
+  \bibinfo{year}{2003}\natexlab{}.
+\newblock \showarticletitle{Latent dirichlet allocation}.
+\newblock \bibinfo{journal}{{\em Journal of machine Learning research\/}}
+  \bibinfo{volume}{3}, \bibinfo{number}{Jan} (\bibinfo{year}{2003}),
+  \bibinfo{pages}{993--1022}.
+\newblock
+
+
 \bibitem[\protect\citeauthoryear{Burges, Shaked, Renshaw, Lazier, Deeds,
   Hamilton, and Hullender}{Burges et~al\mbox{.}}{2005}]%
         {burges2005learning}
@@ -109,6 +133,18 @@
 \newblock \showarticletitle{FMA: A Dataset for Music Analysis}. In
   \bibinfo{booktitle}{{\em 18th International Society for Music Information
   Retrieval Conference}}.
+\newblock
+
+
+\bibitem[\protect\citeauthoryear{Dickey}{Dickey}{1983}]%
+        {dickey1983multiple}
+\bibfield{author}{\bibinfo{person}{James~M Dickey}.}
+  \bibinfo{year}{1983}\natexlab{}.
+\newblock \showarticletitle{Multiple hypergeometric functions: Probabilistic
+  interpretations and statistical uses}.
+\newblock \bibinfo{journal}{{\it J. Amer. Statist. Assoc.}}
+  \bibinfo{volume}{78}, \bibinfo{number}{383} (\bibinfo{year}{1983}),
+  \bibinfo{pages}{628--637}.
 \newblock
 
 
@@ -321,6 +357,20 @@
   \bibinfo{pages}{811--820}.
 \newblock
 \showISBNx{978-1-60558-799-8}
+
+
+\bibitem[\protect\citeauthoryear{Rue, Martino, and Chopin}{Rue
+  et~al\mbox{.}}{2009}]%
+        {rue2009approximate}
+\bibfield{author}{\bibinfo{person}{H{\aa}vard Rue}, \bibinfo{person}{Sara
+  Martino}, {and} \bibinfo{person}{Nicolas Chopin}.}
+  \bibinfo{year}{2009}\natexlab{}.
+\newblock \showarticletitle{Approximate Bayesian inference for latent Gaussian
+  models by using integrated nested Laplace approximations}.
+\newblock \bibinfo{journal}{{\em Journal of the royal statistical society:
+  Series b (statistical methodology)\/}} \bibinfo{volume}{71},
+  \bibinfo{number}{2} (\bibinfo{year}{2009}), \bibinfo{pages}{319--392}.
+\newblock
 
 
 \bibitem[\protect\citeauthoryear{Sarwar, Karypis, Konstan, and Riedl}{Sarwar
