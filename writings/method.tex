@@ -71,10 +71,11 @@ Therefore, the log joint likelihood of the dataset $\mathcal{D}$, latent variabl
 
 \begin{align}
  & \log \big( p(\mathcal{D},\bm{Z},\Theta|\mathcal{H}) \big) \nonumber \\
-= & \sum_{t=1}^N \log p(y_t|\bm{X}_t,\bm{B}_{b_t},\bm{U}_{u_t}) + \sum_{i=1}^B \log p(\bm{B}_i|\bm{z}_i,\bm{S}_{z_i},\delta_b)  \nonumber \\
+= & \sum_{t=1}^N \log p(y_t|\bm{X}_t,\bm{B}_{b_t},\bm{U}_{u_t}) + \sum_{i=1}^B \log p(\bm{B}_i|\bm{z}_i,\bm{S},\delta_b)  \nonumber \\
 + & \sum_{i=1}^B \log p(\bm{z}_{i}|\bm{\theta}) + \sum_{j=1}^S \log p(\bm{S}_j|\bm{w},\delta_s) + \log p(\bm{\theta}|\bm{\gamma})   \nonumber \\
 + & \sum_{k}^U \log p(\bm{U}_k|\delta_u) + \log p(\bm{w}|\delta_w)  \nonumber  \\
-+ & \log p(\delta_u) + \log p(\delta_b) + \log p(\delta_w) + \log p(\delta_s)
++ & \log p(\delta_u|\alpha,\beta) + \log p(\delta_b|\alpha,\beta) \nonumber \\
++ & \log p(\delta_w|\alpha,\beta) + \log p(\delta_s|\alpha,\beta)
 \label{eq:log_likelihood}
 \end{align}
 
