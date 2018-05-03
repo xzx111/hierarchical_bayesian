@@ -1,10 +1,10 @@
-In this section, we conduct several experiments on two data sets: (1) the productional e-commerce apparel data set; (2) the publicly available music data set.  For both data sets, we compare HBayes against several other \emph{state-of-the-art} recommendation methods which are briefly mentioned as follows:
+In this section, we conduct several experiments on two data sets: (1) the real-world e-commerce apparel data set; (2) the publicly available music data set.  For both data sets, we compare HBayes against several other \emph{state-of-the-art} recommendation methods which are briefly mentioned as follows:
 
 {\noindent\textbf{HSR} \cite{wang2015exploring}: is an item-based recommendation approach that employs a special non-negative matrix factorization for exploring the implicit hierarchical structure of users and items so the user preference towards certain products are better understood.  We adopt HSR  as one baseline. \newline
 \textbf{HPF} \cite{gopalan2015scalable}: generates a hierarchical Poisson factorization model for better modeling users' rating towards certain items based upon each one's latent preferences.  Unlike proposed HBayes, HPF does not leverage the content item feature for constructing the hierarchical structure. We adopt HPF as another baseline. \newline
 \textbf{SVD++} \cite{mnih2008probabilistic, koren2008factorization}: combines the collaborative filtering approach and latent factor approach, so to provide a more accurate neighboring based recommendation result.  We adopt SVD++ as another baseline. \newline
 \textbf{CoClustering} \cite{george2005scalable}: another collaborative filtering type of approach based on weighted co-clustering improvements that simultaneously cluster users and items.  We adopt CoClustering as another baseline. \newline
-\textbf{Fatorization Machine (FM)} \cite{rendle2010factorization,rendle2012factorization}: combines support vector machines (SVM) with factorization models which takes the advantage of SVM meanwhile overcomes the feature sparsity issues.  In this paper, we adopt LibFM implementation mentioned in \cite{rendle2012factorization} specifically as another baseline. \newline
+\textbf{Factorization Machine (FM)} \cite{rendle2010factorization,rendle2012factorization}: combines support vector machines (SVM) with factorization models which takes the advantage of SVM meanwhile overcomes the feature sparsity issues.  In this paper, we adopt LibFM implementation mentioned in \cite{rendle2012factorization} specifically as another baseline. \newline
 \textbf{LambdaMART} \cite{burges2010ranknet}: is the boosted tree version of LambdaRank \cite{donmez2009local}, which is based on RankNet \cite{burges2005learning}.  LambdaMART proves to be a very successful approach for ranking as well as recommendation.  We include LambdaMART as another baseline. \newline}
 
 \subsection{Evaluation Metrics}
@@ -21,7 +21,7 @@ discounted cumulative gain (DCG) measures the ranking quality based on the item 
 \text{DCG@K} & = & \sum_{i=1}^K\frac{r_i}{\log_2(i+1)} =  r_1 + \sum_{i=2}^K\frac{r_i}{\log_2(i+1)}\nonumber
 \end{eqnarray}
 
-re-rank all potential products to produce the ideal maximal possible DCG through out first K items, and its correspoding DCG score is called the ideal discounted cumulative gain (IDCG).  By using both DCG and IDCG, the normalized discounted cumulative gain (NDCG) could be defined as follows:
+re-rank all potential products to produce the ideal maximal possible DCG through out first K items, and its corresponding DCG score is called the ideal discounted cumulative gain (IDCG).  By using both DCG and IDCG, the normalized discounted cumulative gain (NDCG) could be defined as follows:
 
 \begin{eqnarray}
 \text{NDCG@K} & = & \frac{\text{DCG@K}}{\text{IDCG@K}}\nonumber
@@ -39,12 +39,13 @@ The apparel data are composed of four types of features: (1) product popularity;
 
 \textbf{Product Title} (TITLE): product titles are created by vendors and they are typically in the forms of natural languages indicating the product functionality and utility.  Examples could be like `\emph{INMAN short sleeve round neck triple color block stripe T-shirt 2017}'.  We preprocess the product titles by generating the sentence vector embedding based on \cite{de2016representation}.  The main idea is to average the wording weights in the title sentence based on the inverse document frequency (IDF) value of each individual word involved. \newline
 
-\textbf{Product Property Features} (PROP): other product metadata features are also provided in the apparel dataset. For instance, the color feature of items takes value like: `black', `white', `red', etc, and the sizing feature takes value like `S', `M', `L', `XL', etc.  Similar as category features, each product property is first encoded into a binary vector $\bm{x}_i \in \{0, 1\}^{|N|}$, where $N$ denotes the set of all possible corresponding product values.  Then we encode all such property binary vectors into a fixed length ($50$) vector. \newline
+\textbf{Product Property Features} (PROP): other product meta data features are also provided in the apparel dataset. For instance, the color feature of items takes value like: `black', `white', `red', etc, and the sizing feature takes value like `S', `M', `L', `XL', etc.  Similar as category features, each product property is first encoded into a binary vector $\bm{x}_i \in \{0, 1\}^{|N|}$, where $N$ denotes the set of all possible corresponding product values.  Then we encode all such property binary vectors into a fixed length ($50$) vector. \newline
 
-On one hand, by utilizing more features HBayes in general reaches better performance in terms of precision-recall metrics.  We report PR-AUC in table (\ref{tab:features_cmp}) to prove this argument; on the other hand, more features needs much more training time.  Figure (\ref{fig:train_time_cmp}) reports the changes in likelihood against training time cost (in minutes) for each feature use cases\footnote{The experiment is conducted via the same linux qual core 2.8 GHz Intel Core i7 macbook with 16 Giggabytes of memory}.   It is shown that by only taking POP features, model spends less than 5 minutes to converge while taking POP+CID+TITLE+PROP features, the model needs more than 6 hours in training.   
+On one hand, by utilizing more features HBayes in general reaches better performance in terms of precision-recall metrics.  We report PR-AUC in table (\ref{tab:features_cmp}) to prove this argument; on the other hand, more features needs much more training time.  Figure (\ref{fig:train_time_cmp}) reports the changes in likelihood against training time cost (in minutes) for each feature use cases\footnote{The experiment is conducted via the same Linux Qual core 2.8 GHz Intel Core i7 macbook with 16 Gigabytes of memory}. It is shown that by only taking POP features, model spends less than 5 minutes to converge while taking POP+CID+TITLE+PROP features, the model needs more than 6 hours in training.   
 
 \begin{table}[htb]
 \centering
+\scalebox{0.85}{
 \begin{tabular}{l|c}
 \toprule
 \textbf{Features} & \textbf{PR AUC} \\
@@ -56,7 +57,7 @@ POP+CID+TITLE & 0.0489 \\
 \rowcolor{mygray}
 POP+CID+TITLE+PROP & 0.0491 \\
 \bottomrule
-\end{tabular}
+\end{tabular}}
 \caption{Model performance under different feature combinations in terms of PR AUC}
 \label{tab:features_cmp}
 \end{table}
@@ -110,7 +111,7 @@ POP+CID+TITLE+PROP & 0.0491 \\
 
 \begin{table}[htb]
 \begin{center}
-\scalebox{0.7}{
+\scalebox{0.85}{
 \begin{tabular}{l|cccc}
 \toprule
 \textbf{Method} & \textbf{NDCG@5} & \textbf{NDCG@10} & \textbf{NDCG@25} & \textbf{NDCG@50} \\
@@ -135,7 +136,7 @@ HBayes & \textbf{0.1557} & \textbf{0.1974} & \textbf{0.2871} & \textbf{0.3590}\\
 \end{table}
 
 \subsubsection{Performance Comparison}
-We first report the model performance regarding precision, recall, as well as F1-score for HBayes against other baselines in Figure (\ref{fig:perf_cmp_F1_apparel},\ref{fig:perf_cmp_precision_apparel},\ref{fig:perf_cmp_recall_apparel}).  As shown when each method recommend fewer number of products (K = 5), HBayes does not show the superiority regarding with recalls, with the increment of recommended items, the recall for HBayes becomes much better against others, which implies HBayes is really efficient in terms of finding items that people tend to take interest in.  In the sense of precision, HBayes is consistantly better than other baseline methods which implies HBayes is much more accurate in terms of item classification.   Given the performance of precisions and recalls, HBayes is much better regarding F1-score with different K for apparel recommendation.
+We first report the model performance regarding precision, recall, as well as F1-score for HBayes against other baselines in Figure (\ref{fig:perf_cmp_F1_apparel},\ref{fig:perf_cmp_precision_apparel},\ref{fig:perf_cmp_recall_apparel}).  As shown when each method recommend fewer number of products (K = 5), HBayes does not show the superiority regarding with recalls, with the increment of recommended items, the recall for HBayes becomes much better against others, which implies HBayes is really efficient in terms of finding items that people tend to take interest in.  In the sense of precision, HBayes is consistently better than other baseline methods which implies HBayes is much more accurate in terms of item classification.   Given the performance of precisions and recalls, HBayes is much better regarding F1-score with different K for apparel recommendation.
 
 Regarding the ranking quality, we use NDCG to report each method's performance in Table (\ref{NDCG_cmp}).  HBayes is superior against other baseline methods through out different K recommended.  Specially, HBayes beats the second best HPF at $\text{K}=5$ by $10.3\%$, at $\text{K}=10$ by $12.4\%$, at $\text{K}=25$ by $14.7\%$ and at $\text{K}=50$ by $11.2\%$.  
 
@@ -159,7 +160,7 @@ In terms of ranking quality, we report the NDCG performance in Table (\ref{NDCG_
 
 \begin{table}[htb]
 \begin{center}
-\scalebox{0.7}{
+\scalebox{0.85}{
 \begin{tabular}{l|cccc}
 \toprule
 \textbf{Method} & \textbf{NDCG@5} & \textbf{NDCG@10} & \textbf{NDCG@25} & \textbf{NDCG@50} \\

@@ -51,12 +51,6 @@ p\big(y_t|\bm{X}_t,\bm{B}_{b_t},\bm{U}_{u_t} \big)= \Big[\sigma\big(h_t\big)\Big
 
 \noindent where $\sigma(\cdot)$ is a logistic function, i.e. $\sigma(x)=(1+e^{-x})^{-1}$. $h_{t}\overset{\mathrm{def}}=\bm{X}_t^T(\bm{B}_{b_t}+\bm{U}_{u_t})$. $\mathbf{X}^T$ is the vector transpose of $\mathbf{X}$. $\bm{U}_{u_t}$ represents user specific information encoded in HBayes for user $u_t$ and $\bm{B}_{b_t}$ denotes the brand $b_t$'s specific information.
 
-% Therefore, the conditional likelihood of entire event data $\mathcal{D}$ can be represented as follows:
-
-% \begin{equation}
-% \mathcal{L} = \prod_{t=1}^N p\big(y_t|\bm{X}_t,\bm{B}_{b_t},\bm{U}_{u_t} \big)
-% \end{equation}
-
 As mentioned in Step 3 of the generative process of HBayes, each brand $i$'s style proportion distribution $\boldsymbol{\theta}$ follows a Dirichlet distribution: $p(\boldsymbol{\theta}) \sim Dir(\boldsymbol{\gamma})$, which is defined as follows: 
 
 \begin{equation*}
@@ -128,17 +122,17 @@ q(\bm{Z}, \Theta) = & q(\mathbf{Z}) \cdot \prod_{k=1}^K q(\mathbf{U}_k) \cdot \p
 The Gaussian priors from our log joint probability (see eq.(\ref{eq:log_likelihood})) are not conjugate to the data likelihood due to the fact that our events are modeled by a sigmoid function (see eq.(\ref{eq:sigmoid_prob})). In order to conduct tractable inference on $\mathcal{Q}'(q)$, we apply a variational lower bound approximation on eq.(\ref{eq:sigmoid_prob}) that has the ``squared exponential'' form. Therefore, they are conjugate to the Gaussian priors.
 
 \begin{equation}
-\sigma(h_{i}) \geq \sigma(\xi_{i})\exp\big\{\frac{1}{2}(h_{i}-\xi_{i})-\lambda_{i}(h_{i}^2-\xi_{i}^2)\big\}
+\sigma(h_t) \geq \sigma(\xi_t)\exp\big\{\frac{1}{2}(h_t-\xi_t)-\lambda_t(h_t^2-\xi_t^2)\big\}
 \end{equation}
 
-\noindent where $\lambda_{i}\overset{\mathrm{def}}=\frac{1}{2\xi_{i}}[\sigma(\xi_{i})-\frac{1}{2}]$ and $\xi_{i}$ is a variational parameter. This lower bound is derived using the convex inequality. The similar problem was discussed in \cite{jaakkola1997variational,jordan1999introduction}.
+\noindent where $\lambda_t\overset{\mathrm{def}}=\frac{1}{2\xi_t}[\sigma(\xi_t)-\frac{1}{2}]$ and $\xi_t$ is a variational parameter. This lower bound is derived using the convex inequality. The similar problem was discussed in \cite{jaakkola1997variational,jordan1999introduction}.
 
 Therefore, each event likelihood can be expressed as follows:
 
 \begin{align}
 \label{eq:likelihood_approx}
-& \big[\sigma(h_{i})\big]^{y_t} \cdot  \big[1-\sigma(h_{i}) \big]^{1-y_t} = \exp\big( y_t h_t \big) \sigma(-h_{i}) \nonumber \\
-\geq & \sigma(\xi_{i})\exp \big(y_t h_{i}-\frac{1}{2}(h_{i}+\xi_{i})-\lambda_{i}(h_{i}^2-\xi_{i}^2) \big)
+& \big[\sigma(h_t)\big]^{y_t} \cdot  \big[1-\sigma(h_t) \big]^{1-y_t} = \exp\big( y_t h_t \big) \sigma(-h_t) \nonumber \\
+\geq & \sigma(\xi_t)\exp \big(y_t h_t-\frac{1}{2}(h_t+\xi_t)-\lambda_t(h_t^2-\xi_t^2) \big)
 \end{align}
 
 By using the sigmoid approximation in eq.(\ref{eq:likelihood_approx}), our variational fee energy $\mathcal{Q}'(q)$ (eq.(\ref{eq:original_variational_energy})) can be bounded as:
@@ -150,16 +144,50 @@ By using the sigmoid approximation in eq.(\ref{eq:likelihood_approx}), our varia
 
 In the following, we will maximize the lower bound of the variational free energy $\mathcal{Q}_{\xi}'(q) $ for parameter estimation.
 
-\subsubsection{Parameter Updates}
+\subsubsection{Parameter Estimation}
 
 We develop an Expectation-Maximization (EM) algorithm for HBayes parameter estimation where in the E-step, we compute the expectation of the hidden variables $\mathbf{Z}$ and in the M-step, we try to find $\Theta$ that maximizes lower bound of the variational free energy $\mathcal{Q}_{\xi}'(q)$ (eq.(\ref{eq:approx_variational_energy})). In the M-step, we use coordinate ascent variational inference (CAVI) \cite{bishop2006pattern} to optimize $\mathcal{Q}_{\xi}'(q)$. CAVI iteratively optimizes each factor of the mean field variational distribution, while holding the others fixed.
 
+\textbf{E-step}
 
+
+\textbf{M-step}
+
+
+\subsubsection{Summary}
+The parameter estimation method for the HBayes is summarized by Algorithm \ref{alg:hbayes}.
+
+\begin{algorithm}
+\caption{Parameter Estimation in HBayes}
+\label{alg:hbayes}
+\begin{algorithmic}[1]
+\State{\small \textbf{INPUT}:}
+\State{Hyper-parameters $\mathcal{H}$:  $\mathcal{H} = \{\alpha, \beta, \boldsymbol{\gamma}\}$}
+\State{Data samples $\mathcal{D}$: $(\mathbf{X}_t, b_t, u_t, y_t)$, $t = 1, \cdots N$}
+
+\Procedure{Learning HBayes}{}
+\Repeat
+\State E-step: compute expectation of $\mathbf{Z}$ by eq.().
+\State M-step: estimate $\{\bm{U}_k\}, \{\bm{B}_i\}, \{\bm{S}_j\}, \bm{w}, \boldsymbol{\theta}, \delta_u,\delta_b,\delta_s,\delta_w$ by eq.() - eq.().
+\Until{Convergence}
+\State
+\Return $\Theta$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 
 \subsection{Prediction}
 
-\subsection{Summary}
+In the recommender system,  the task is to generate top $K$ products list for each user. So, given the user $u^*$,  it's natural to expose top M products based on the probability of positive outcome. For the $m^{th}$ item, the probability is calculated as:
 
-
-
-\subsection{Relationship with Other Models}
+\begin{equation}
+\label{prediction}
+\begin{split}
+\hat{y}_m & = p(y_m=1|\bm{x}_m,\mathcal{D},\mathcal{H}) \approx \int \sigma(h_{m})q(\bm{Z},\Theta)\mathrm{d}\Theta \nonumber \\
+& = \int \sigma(h_{m})\mathcal{N}(h_{m}|\mu_{m},\sigma^2_{m})\mathrm{d}h_{m} \approx \sigma(\frac{\mu_{m}}{\sqrt{1+\pi\sigma^2_{m}/8}})
+\end{split}
+\end{equation}
+where $h_{m}$ is a random variable with Gaussian distribution:
+$$h_{m}\overset{\mathrm{def}}=\bm{x}_m^T(\bm{w}_{b_m}^{(b)}+\bm{w}_{u^*}^{(u)}) \sim \mathcal{N}(h_{m};\mu_{m},\sigma^2_{m})$$
+$$\mu_{m}\overset{\mathrm{def}}=\mathbb{E}\big[\bm{x}_m^T(\bm{w}_{b_m}^{(b)}+\bm{w}_{u^*}^{(u)})\big]$$
+$$\sigma^2_{m}\overset{\mathrm{def}}=\mathbb{E}\Big[\big(\bm{x}_m^T(\bm{w}_{b_m}^{(b)}+\bm{w}_{u^*}^{(u)})-\mu_{m}\big)^2\Big]$$
