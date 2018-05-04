@@ -165,15 +165,6 @@ and the update rule for $\mu_{i,j}$ is
 For each user $k$, $k = 1, \cdots, U$, we parameterize $q(\mathbf{U}_k)$ as a multivariate normal distribution, i.e., $q(\mathbf{U}_k) = \mathcal{N}(\mathbf{U}_k; \mu^u_k, \Sigma_k^u)$, and the update rule for $\mu^u_k$, $\Sigma_k^u$ are 
 
 \begin{align}
-\label{eq:start}
-\Sigma_k^u & = \big[  \delta_u \mathbf{I} + 2\lambda_t \sum_{t=1}^N \mathbb{I}(u_t = k) \mathbf{X}_t \mathbf{X}_t^T  \big]^{-1} \\ 
-\mu^u_k & = 
-\end{align}
-
-\noindent \textbf{Parametrization and update rule of $q(\mathbf{U}_k)$}
-For each user $k$, $k = 1, \cdots, U$, we parameterize $q(\mathbf{U}_k)$ as a multivariate normal distribution, i.e., $q(\mathbf{U}_k) = \mathcal{N}(\mathbf{U}_k; \mu^u_k, \Sigma_k^u)$, and the update rule for $\mu^u_k$, $\Sigma_k^u$ are 
-
-\begin{align}
 \Sigma_k^u & = \big[  \delta_u \mathbf{I} + 2\lambda_t \sum_{t=1}^N \mathbb{I}(u_t = k) \mathbf{X}_t \mathbf{X}_t^T  \big]^{-1} \\ 
 \mu^u_k & = 
 \end{align}
@@ -222,13 +213,6 @@ For all the precision parameters' distributions, we parameterize them as a Gamma
 \beta & = b
 \label{eq:end}
 \end{align}
-
-
-
-
-
-
-
 
 
 
