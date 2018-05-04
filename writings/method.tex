@@ -21,8 +21,8 @@ The generative process of HBayes can be described as follows:
 
 \item[Step 4.] For each brand $i$:
 	\begin{enumerate}
-		\item[Step 4.1] Draw style assignment $z_{i}$ for brand $i$, $z_{i} \sim \mbox{Mult}(\boldsymbol{\theta})$.
-		\item[Step 4.2] Draw $\mathbf{B}_i \sim \mathcal{N}(\mathbf{S}_{z_i}, \delta_b)$.
+		\item[Step 4.1] Draw style assignment $\mathbf{z}_i$ for brand $i$ where the selected style $p$ is sampled from $\mbox{Mult}(\boldsymbol{\theta})$. $\mathbf{z}_i$ is a $S\times1$ one hot encoding vector that $z_{i,p} = 1$ and $z_{i,j} = 0$ for $j = 1, \cdots, p-1, p+1, \cdots, S$.
+		\item[Step 4.2] Draw $\mathbf{B}_i \sim \mathcal{N}(\mathbf{S}_{p}, \delta_b)$.
 	\end{enumerate}
 
 \item[Step 5.] For each event $t$, draw $y_t$ from Bernoulli distribution where the probability $p$ is defined as $p(y_t|\mathbf{x}_t, \mathbf{B}_{b_t}, \mathbf{U}_{u_t})$.
@@ -62,10 +62,10 @@ Dir(\bm{\theta}|\bm{\gamma})=\frac{\Gamma(\sum_{j=1}^{S}\theta_j)}{\prod_{j=1}^{
 Furthermore, in Step 4 of the generative process of HBayes, a brand is modeled as a random mixture over latent styles. Hence, we model the brand parameters by a mixture of multivariate Gaussian distribution defined as follows:
 
 \begin{equation*}
-p(\bm{B}_i|\bm{z}_i,\bm{S}_{z_i},\delta_b) = \prod_{j}^S p(\bm{B}_i|\bm{S}_j,\delta_b)^{\mathbb{I}(\bm{z}_i=1)} = \prod_{j}^S \mathcal{N}(\bm{B}_i; \bm{S}_j,\delta_b) ^{\mathbb{I}(\bm{z}_i=1)}
+p(\bm{B}_i|\bm{z}_i,\bm{S},\delta_b) = \prod_{j}^S p(\bm{B}_i|\bm{S}_j,\delta_b)^{\mathbb{I}(z_{i,j}=1)} = \prod_{j}^S \mathcal{N}(\bm{B}_i; \bm{S}_j,\delta_b) ^{\mathbb{I}(z_{i,j}=1)}
 \end{equation*}
 
-\noindent where $\mathbb{I}(\xi)$ is an indicator function that $\mathbb{I}(\xi)=1$ if the statement $\xi$ is true; $\mathbb{I}(\xi)=0$ otherwise.
+\noindent where $z_{i,j}$ is the \emph{j}th element of $\mathbf{z}_i$ and $\mathbb{I}(\xi)$ is an indicator function that $\mathbb{I}(\xi)=1$ if the statement $\xi$ is true; $\mathbb{I}(\xi)=0$ otherwise.
 
 Therefore, the log joint likelihood of the dataset $\mathcal{D}$, latent variable $\bm{Z}$ and the parameter $\Theta$ by given hyper-parameters $\mathcal{H} = \{\gamma, \alpha,\beta\}$ could be written as follows:
 
@@ -73,9 +73,8 @@ Therefore, the log joint likelihood of the dataset $\mathcal{D}$, latent variabl
  & \log \big( p(\mathcal{D},\bm{Z},\Theta|\mathcal{H}) \big) \nonumber \\
 = & \sum_{t=1}^N \log p(y_t|\bm{X}_t,\bm{B}_{b_t},\bm{U}_{u_t}) + \sum_{i=1}^B \log p(\bm{B}_i|\bm{z}_i,\bm{S},\delta_b)  \nonumber \\
 + & \sum_{i=1}^B \log p(\bm{z}_{i}|\bm{\theta}) + \sum_{j=1}^S \log p(\bm{S}_j|\bm{w},\delta_s) + \log p(\bm{\theta}|\bm{\gamma})   \nonumber \\
-+ & \sum_{k}^U \log p(\bm{U}_k|\delta_u) + \log p(\bm{w}|\delta_w)  \nonumber  \\
-+ & \log p(\delta_u|\alpha,\beta) + \log p(\delta_b|\alpha,\beta) \nonumber \\
-+ & \log p(\delta_w|\alpha,\beta) + \log p(\delta_s|\alpha,\beta)
++ & \sum_{k}^U \log p(\bm{U}_k|\delta_u) + \log p(\bm{w}|\delta_w) +  \log p(\delta_w|\alpha,\beta) \nonumber  \\
++ & \log p(\delta_u|\alpha,\beta) + \log p(\delta_b|\alpha,\beta) + \log p(\delta_s|\alpha,\beta)
 \label{eq:log_likelihood}
 \end{align}
 
@@ -116,15 +115,15 @@ q(\bm{Z}, \Theta) = & q(\mathbf{Z}) \cdot \prod_{k=1}^K q(\mathbf{U}_k) \cdot \p
 \cdot & q(\mathbf{w}) \cdot q(\boldsymbol{\theta}) \cdot q(\delta_u) \cdot q(\delta_b) \cdot q(\delta_s) \cdot q(\delta_w)
 \end{align}
 
-\noindent where $q$ denotes different distribution function for notation brevity.
+\noindent where $q$ denotes different distribution functions for notation brevity. Details of choices of different distributions will be discussed in Section \ref{sec:param}.
 
 \subsubsection{Sigmoid Approximation}
 
 The Gaussian priors from our log joint probability (see eq.(\ref{eq:log_likelihood})) are not conjugate to the data likelihood due to the fact that our events are modeled by a sigmoid function (see eq.(\ref{eq:sigmoid_prob})). In order to conduct tractable inference on $\mathcal{Q}'(q)$, we apply a variational lower bound approximation on eq.(\ref{eq:sigmoid_prob}) that has the ``squared exponential'' form. Therefore, they are conjugate to the Gaussian priors.
 
-\begin{equation}
+\begin{equation*}
 \sigma(h_t) \geq \sigma(\xi_t)\exp\big\{\frac{1}{2}(h_t-\xi_t)-\lambda_t(h_t^2-\xi_t^2)\big\}
-\end{equation}
+\end{equation*}
 
 \noindent where $\lambda_t\overset{\mathrm{def}}=\frac{1}{2\xi_t}[\sigma(\xi_t)-\frac{1}{2}]$ and $\xi_t$ is a variational parameter. This lower bound is derived using the convex inequality. The similar problem was discussed in \cite{jaakkola1997variational,jordan1999introduction}.
 
@@ -146,13 +145,93 @@ By using the sigmoid approximation in eq.(\ref{eq:likelihood_approx}), our varia
 In the following, we will maximize the lower bound of the variational free energy $\mathcal{Q}_{\xi}'(q) $ for parameter estimation.
 
 \subsubsection{Parameter Estimation}
+\label{sec:param}
 
 We develop an Expectation-Maximization (EM) algorithm for HBayes parameter estimation where in the E-step, we compute the expectation of the hidden variables $\mathbf{Z}$ and in the M-step, we try to find $\Theta$ that maximizes lower bound of the variational free energy $\mathcal{Q}_{\xi}'(q)$ (eq.(\ref{eq:approx_variational_energy})). In the M-step, we use coordinate ascent variational inference (CAVI) \cite{bishop2006pattern} to optimize $\mathcal{Q}_{\xi}'(q)$. CAVI iteratively optimizes each factor of the mean field variational distribution, while holding the others fixed.
 
-\textbf{E-step}
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{Z})$}
+We assume each brand's style membership latent variable is independent and therefore, $q(\mathbf{Z}) = \prod_{i=1}^B q(\mathbf{z}_i)$. For each $\mathbf{z}_i$, we parameterize $q(\mathbf{z}_i)$ as a multinomial distribution, i.e.,
+
+$$q(\mathbf{z}_i) = \prod_{j=1}^S \mu_{i,j}^{\mathbb{I}(z_{i,j}=1)}$$
+
+and the update rule for $\mu_{i,j}$ is  
+
+\begin{equation}
+\label{eq:hidden}
+\mu_{i,j} =  
+\end{equation}
+
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{U}_k)$}
+For each user $k$, $k = 1, \cdots, U$, we parameterize $q(\mathbf{U}_k)$ as a multivariate normal distribution, i.e., $q(\mathbf{U}_k) = \mathcal{N}(\mathbf{U}_k; \mu^u_k, \Sigma_k^u)$, and the update rule for $\mu^u_k$, $\Sigma_k^u$ are 
+
+\begin{align}
+\label{eq:start}
+\Sigma_k^u & = \big[  \delta_u \mathbf{I} + 2\lambda_t \sum_{t=1}^N \mathbb{I}(u_t = k) \mathbf{X}_t \mathbf{X}_t^T  \big]^{-1} \\ 
+\mu^u_k & = 
+\end{align}
+
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{U}_k)$}
+For each user $k$, $k = 1, \cdots, U$, we parameterize $q(\mathbf{U}_k)$ as a multivariate normal distribution, i.e., $q(\mathbf{U}_k) = \mathcal{N}(\mathbf{U}_k; \mu^u_k, \Sigma_k^u)$, and the update rule for $\mu^u_k$, $\Sigma_k^u$ are 
+
+\begin{align}
+\Sigma_k^u & = \big[  \delta_u \mathbf{I} + 2\lambda_t \sum_{t=1}^N \mathbb{I}(u_t = k) \mathbf{X}_t \mathbf{X}_t^T  \big]^{-1} \\ 
+\mu^u_k & = 
+\end{align}
+
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{B}_i)$}
+For each brand $i$, $i = 1, \cdots, B$, we parameterize $q(\mathbf{B}_i)$ as a multivariate normal distribution, i.e., $q(\mathbf{B}_i) = \mathcal{N}(\mathbf{B}_i; \mu^b_i, \Sigma^b_i)$, and the update rule for $\mu^b_i$, $\Sigma^b_i$ are 
+
+\begin{align}
+\Sigma^b_i & = \\ 
+\mu^b_i & = 
+\end{align}
 
 
-\textbf{M-step}
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{S}_j)$}
+For each style $j$, $j = 1, \cdots, S$, we parameterize $q(\mathbf{S}_j)$ as a multivariate normal distribution, i.e., $q(\mathbf{S}_j) = \mathcal{N}(\mathbf{S}_j; \mu^s_j, \Sigma^s_j)$, and the update rule for $\mu^s_j$, $\Sigma^s_j$ are 
+
+\begin{align}
+\Sigma^s_j & = \\ 
+\mu^s_j & = 
+\end{align}
+
+
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{w})$}
+For the mean variable of style prior $\mathbf{w}$, we parameterize $q(\mathbf{w})$ as a multivariate normal distribution, i.e., $q(\mathbf{w}) = \mathcal{N}(\mathbf{w}; \mu^w, \Sigma^w)$, and the update rule for $\mu^w$, $\Sigma^w$ are 
+
+\begin{align}
+\Sigma^w & = a\\ 
+\mu^w & = b
+\end{align}
+
+
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{\theta})$}
+For the style proportion distribution $\mathbf{\theta}$, we parameterize $q(\mathbf{\theta})$ as a Dirichlet distribution, i.e., $q(\mathbf{\theta}) = Dir(\mathbf{\theta}; \mathbf{\gamma})$, and the update rule for $\gamma$ are 
+
+\begin{equation}
+\gamma_j =
+\end{equation}
+
+
+
+\noindent \textbf{Parametrization and update rule of $q(\delta_u)$, $q(\delta_b)$, $q(\delta_s)$ and $q(\delta_w)$}
+For all the precision parameters' distributions, we parameterize them as a Gamma distribution, i.e., $p(\delta_*) = \mathcal{G}(\delta_*; \alpha, \beta); \mathbf{\gamma})$, where $\delta_* \in \{ \delta_w, \delta_s, \delta_u, \delta_b \}$ and the update rule for $\alpha$ and $\beta$ are 
+
+\begin{align}
+\alpha & = a\\ 
+\beta & = b
+\label{eq:end}
+\end{align}
+
+
+
+
+
+
+
+
+
+
 
 
 \subsubsection{Summary}
@@ -168,8 +247,8 @@ The parameter estimation method for the HBayes is summarized by Algorithm \ref{a
 
 \Procedure{Learning HBayes}{}
 \Repeat
-\State E-step: compute expectation of $\mathbf{Z}$ by eq.().
-\State M-step: estimate $\{\bm{U}_k\}, \{\bm{B}_i\}, \{\bm{S}_j\}, \bm{w}, \boldsymbol{\theta}, \delta_u,\delta_b,\delta_s,\delta_w$ by eq.() - eq.().
+\State E-step: compute expectation of $\mathbf{Z}$ by eq.(\ref{eq:hidden}).
+\State M-step: estimate $\{\bm{U}_k\}, \{\bm{B}_i\}, \{\bm{S}_j\}, \bm{w}, \boldsymbol{\theta}, \delta_u,\delta_b,\delta_s,\delta_w$ by eq.(\ref{eq:start}) - eq.(\ref{eq:end}).
 \Until{Convergence}
 \State
 \Return $\Theta$
@@ -179,16 +258,20 @@ The parameter estimation method for the HBayes is summarized by Algorithm \ref{a
 
 \subsection{Prediction}
 
-In the recommender system,  the task is to generate top $K$ products list for each user. So, given the user $u^*$,  it's natural to expose top M products based on the probability of positive outcome. For the $m^{th}$ item, the probability is calculated as:
+In the recommender system, the task is to generate top $K$ products list for each user. So, given the user $u^*$,  it's natural to expose top M products based on the probability of positive outcome. For the $m^{th}$ item, the probability is calculated as:
 
 \begin{equation}
 \label{prediction}
 \begin{split}
-\hat{y}_m & = p(y_m=1|\bm{x}_m,\mathcal{D},\mathcal{H}) \approx \int \sigma(h_{m})q(\bm{Z},\Theta)\mathrm{d}\Theta \nonumber \\
+\hat{y}_m & = p(y_m=1|\bm{X}_m,\mathcal{D},\mathcal{H}) \approx \int \sigma(h_{m})q(\bm{Z},\Theta)\mathrm{d}\Theta \nonumber \\
 & = \int \sigma(h_{m})\mathcal{N}(h_{m}|\mu_{m},\sigma^2_{m})\mathrm{d}h_{m} \approx \sigma(\frac{\mu_{m}}{\sqrt{1+\pi\sigma^2_{m}/8}})
 \end{split}
 \end{equation}
-where $h_{m}$ is a random variable with Gaussian distribution:
-$$h_{m}\overset{\mathrm{def}}=\bm{x}_m^T(\bm{w}_{b_m}^{(b)}+\bm{w}_{u^*}^{(u)}) \sim \mathcal{N}(h_{m};\mu_{m},\sigma^2_{m})$$
-$$\mu_{m}\overset{\mathrm{def}}=\mathbb{E}\big[\bm{x}_m^T(\bm{w}_{b_m}^{(b)}+\bm{w}_{u^*}^{(u)})\big]$$
-$$\sigma^2_{m}\overset{\mathrm{def}}=\mathbb{E}\Big[\big(\bm{x}_m^T(\bm{w}_{b_m}^{(b)}+\bm{w}_{u^*}^{(u)})-\mu_{m}\big)^2\Big]$$
+
+\noindent where $h_{m}$ is a random variable with Gaussian distribution:
+
+\begin{align*}
+ h_{m}  & =\bm{X}_m^T(\bm{B}_{b_m}+\bm{U}_{u^*})  \sim \mathcal{N}(h_{m};\mu_{m},\sigma^2_{m}) \\ 
+\mu_{m} & =\mathbb{E}\big[\bm{X}_m^T(\bm{B}_{b_m}+\bm{U}_{u^*})\big] \\ 
+\sigma^2_{m} & =\mathbb{E}\Big[\big(\bm{X}_m^T(\bm{B}_{b_m}+\bm{U}_{u^*})-\mu_{m}\big)^2\Big]
+\end{align*}
