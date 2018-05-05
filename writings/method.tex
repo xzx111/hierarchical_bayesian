@@ -1,4 +1,6 @@
+In this work, we develop our generalized hierarchical Bayesian modeling framework that is able to capture the hierarchical structural relations and latent relations in the real-world recommendation scenarios. In our framework, we incorporate both user specific features and user events into model learning so that more personalized recommendation results can be achieved. Furthermore, we present a variational inference algorithm for the HBayes framework to provide fast parameter estimation.
 
+In the following, we will describe how HBayes works by using apparel recommendation as an illustration example. Using a real-world example helps explain the latent variables, hierarchy structural relations, and the conditional independence assumptions implied in HBayes. Please note that even we explain HBayes in apparel recommendation, the framework itself can be generalized into other recommendation scenarios with little modification. 
 
 
 
@@ -47,6 +49,7 @@ In this work, we model the probability of a single event $t$ given ($\mathbf{X}_
 p\big(y_t|\bm{X}_t,\bm{B}_{b_t},\bm{U}_{u_t} \big)= \Big[\sigma\big(h_t\big)\Big]^{y_t} \cdot \Big[1-\sigma\big(h_t\big)\Big]^{1-y_t}
 \end{equation}
 
+\noindent where $\sigma(\cdot)$ is a logistic function, i.e. $\sigma(x)=(1+e^{-x})^{-1}$. $h_{t}=\bm{X}_t^T(\bm{B}_{b_t}+\bm{U}_{u_t})$. $\mathbf{X}^T$ is the vector transpose of $\mathbf{X}$. $\bm{U}_{u_t}$ represents user specific information encoded in HBayes for user $u_t$ and $\bm{B}_{b_t}$ denotes the brand $b_t$'s specific information.
 
 As mentioned in Step 3 of the generative process of HBayes, each brand $i$'s style proportion distribution $\boldsymbol{\theta}$ follows a Dirichlet distribution: $p(\boldsymbol{\theta}) \sim Dir(\boldsymbol{\gamma})$, which is defined as follows: 
 
@@ -78,6 +81,7 @@ Therefore, the log joint likelihood of the dataset $\mathcal{D}$, latent variabl
 We use $\Theta$ to denote all model parameters:
 
 \begin{equation*}
+\Theta = \Big\{\{\bm{U}_k\}, \{\bm{B}_i\}, \{\bm{S}_j\}, \bm{w}, \boldsymbol{\theta}, \delta_u,\delta_b,\delta_s,\delta_w \Big\},
 \end{equation*}
 
 \noindent where $k \in \{1, \cdots, U\}$, $i \in \{1, \cdots, B\}$, $j \in \{1, \cdots, S\}$. 
@@ -121,6 +125,7 @@ The Gaussian priors from our log joint probability (see eq.(\ref{eq:log_likeliho
 \sigma(h_t) \geq \sigma(\xi_t)\exp\big\{\frac{1}{2}(h_t-\xi_t)-\lambda_t(h_t^2-\xi_t^2)\big\}
 \end{equation*}
 
+\noindent where $\lambda_t=\frac{1}{2\xi_t}[\sigma(\xi_t)-\frac{1}{2}]$ and $\xi_t$ is a variational parameter. This lower bound is derived using the convex inequality. The similar problem was discussed in \cite{jaakkola1997variational,jordan1999introduction}.
 
 Therefore, each event likelihood can be expressed as follows:
 
