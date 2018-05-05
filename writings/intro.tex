@@ -1,10 +1,17 @@
+<<<<<<< HEAD
 Real-world organizations in business domains operate in a multi-item, multi-level environment. Items and their corresponding information collected by these organizations often reflect a hierarchical structure. For examples, products in retail stores are usually stored in hierarchical inventories. News on web pages is created and placed hierarchically in most websites. These hierarchical structures and the data within them provide a large amount of information when building effective recommendation systems. Especially in e-commerce domain, all products are displayed in a site-wide hierarchical catalog and how to build an accurate recommendation engine on top of it becomes one of the keys to majority companies' business success nowadays. 
 
 However, how to utilize the rich information behind hierarchical structures to make personalized and accurate product recommendations still remains challenging due to the unique characteristics of hierarchical structures and the modeling trade-offs arising from them. Briefly, most well-established recommendation algorithms cannot naturally take hierarchical structures as additional inputs and flatting hierarchical structures usually doesn't work well. It will not only blow up the entire feature space but introduce noise when training the recommendation models. On the other hand, completely ignoring the hierarchies will lead to recommendation inaccuracies. The most common way to alleviate this problem is to feed every piece of data from the hierarchy into a complex deep neural network and hope the network itself can figure out a way to use the hierarchical knowledge. However, such approaches usually behave more like black boxes. They are difficult to debug and cannot provide any interpretation of their intermediate results and outcomes.
+=======
+
+>>>>>>> 0686c90aca7a1d24b696cc404d4777332c85f203
 
 In this work, we propose and develop a hierarchical Bayesian, a.k.a., \emph{HBayes}, modeling framework that is able to flexibly capture various relations between items in hierarchical structures from different recommendation scenarios. By introducing latent variables, all hierarchical structures are encoded as conditional independence in HBayes graphical models. Moreover, we develop a variational inference algorithm for learning parameters of HBayes. 
 
+<<<<<<< HEAD
 To illustrate the modeling power of the proposed HBayes approach, we introduce HBayes by using a real-world apparel recommendation problem as an example. As an illustration, we consider apparel styles, product brands and apparel items,  and form them into a three-level hierarchical structure. We add additional latent variables as the apparel style membership variables to capture the diverse and hidden style properties of each brand. Furthermore, we include user-specific features into HBayes and extend HBayes into the supervised learning setting where users feedback actions such as clicks and conversions are incorporated. Please note that our HBayes framework is not only limited to apparel recommendation and at the end, we show its flexibility and effectiveness on a music recommendation problem as well.
+=======
+>>>>>>> 0686c90aca7a1d24b696cc404d4777332c85f203
 
 Overall this paper makes the following contributions:
 
