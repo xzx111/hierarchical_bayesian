@@ -8,7 +8,7 @@ In the following, we will describe how HBayes works by using apparel recommendat
 
 In the real-world scenario, each item or product has to come with a brand and a brand may have more than one items in the hierarchical structures. Therefore, we denote each event $t$ as a 4-tuple (Item, Brand, User, IsClick), i.e, ($\mathbf{X}_t, b_t, u_t, y_t$). $\mathbf{X}_t$ represents the item features associated with event $t$ and $y_t$ is the binary label that indicates whether user $u_t$ has clicked $\mathbf{X}_t$ or not. $b_t$ is the brand of item $\mathbf{X}_t$. 
 
-Furthermore, we expand the hierarchy by a hidden factor, i.e., ``style''. Products from each brand $b_t$ tends to exhibit different styles or tastes, which are unknown but exist. In this paper, brands are represented as random mixtures over latent styles, where each style is characterized by a distribution over all the items. Let $S$, $B$, $U$ and $N$ be the total number of styles, brands, users and events.
+Furthermore, we expand the hierarchy by a hidden factor, i.e., ``style''. Products from each brand $b_t$ tend to exhibit different styles or tastes, which are unknown but exist. In this paper, brands are represented as random mixtures over latent styles, where each style is characterized by a distribution over all the items. Let $S$, $B$, $U$ and $N$ be the total number of styles, brands, users and events.
 
 The generative process of HBayes can be described as follows:
 
@@ -54,7 +54,7 @@ p\big(y_t|\bm{X}_t,\bm{B}_{b_t},\bm{U}_{u_t} \big)= \Big[\sigma\big(h_t\big)\Big
 As mentioned in Step 3 of the generative process of HBayes, each brand $i$'s style proportion distribution $\boldsymbol{\theta}$ follows a Dirichlet distribution: $p(\boldsymbol{\theta}) \sim Dir(\boldsymbol{\gamma})$, which is defined as follows: 
 
 \begin{equation*}
-Dir(\bm{\theta}|\bm{\gamma})=\frac{\Gamma(\sum_{j=1}^{S}\theta_j)}{\prod_{j=1}^{S}\Gamma(\theta_j)}\prod_{j=1}^S \theta_j^{\gamma_j-1}
+Dir(\bm{\theta}|\bm{\gamma})=\frac{\Gamma(\sum_{j=1}^{S}\gamma_j)}{\prod_{j=1}^{S}\Gamma(\gamma_j)}\prod_{j=1}^S \theta_j^{\gamma_j-1}
 \end{equation*}
 
 \noindent where $\bm{\gamma}$ is the $S$-dimensional Dirichlet hyper-parameter. We initialize $\gamma_j$ by $\frac{1}{S}$. 
@@ -98,7 +98,7 @@ Since both $\mathbf{Z}$ and $\Theta$ defined by the HBayes are unobserved, we ca
 
 From the Bayes rule, we can see that the posteriors distribution of $\mathbf{Z}$ and $\Theta$ can be represented by $p(\bm{Z},\Theta|\mathcal{D}) = \frac{p(\mathcal{D},\bm{Z},\Theta)}{p(\mathcal{D})}$. However, this above distribution is intractable to compute in general \cite{dickey1983multiple}. To tackle this problem, a wide variety of approximate inference algorithms are developed, such as Laplace approximation \cite{rue2009approximate}, variational approximation \cite{bishop2006pattern}, and Markov Chain Monte Carlo (MCMC) approach \cite{blei2003latent}, etc.
 
-In this work, we choose to solve this problem by using variational Bayes approximation \cite{bishop2006pattern}. More specifically, we approximate the original posterior distribution $p(\bm{Z}, \Theta| \mathcal{D})$ with a tractable distribution $q(\bm{Z}, \Theta)$ such that instead of maximizing the $\mathcal{Q}$ function defined in eq.(\ref{eq:original_q}), we maximize the variational fee energy defined as 
+In this work, we choose to solve this problem by using variational Bayes approximation \cite{bishop2006pattern}. More specifically, we approximate the original posterior distribution $p(\bm{Z}, \Theta| \mathcal{D})$ with a tractable distribution $q(\bm{Z}, \Theta)$ such that instead of maximizing the $\mathcal{Q}$ function defined in eq.(\ref{eq:original_q}), we maximize the variational free energy defined as 
 
 \begin{equation}
 \label{eq:original_variational_energy}
@@ -135,7 +135,7 @@ Therefore, each event likelihood can be expressed as follows:
 \geq & \sigma(\xi_t)\exp \big(y_t h_t-\frac{1}{2}(h_t+\xi_t)-\lambda_t(h_t^2-\xi_t^2) \big)
 \end{align}
 
-By using the sigmoid approximation in eq.(\ref{eq:likelihood_approx}), our variational fee energy $\mathcal{Q}'(q)$ (eq.(\ref{eq:original_variational_energy})) can be bounded as:
+By using the sigmoid approximation in eq.(\ref{eq:likelihood_approx}), our variational free energy $\mathcal{Q}'(q)$ (eq.(\ref{eq:original_variational_energy})) can be bounded as:
 
 \begin{equation}
 \label{eq:approx_variational_energy}
@@ -147,61 +147,73 @@ In the following, we will maximize the lower bound of the variational free energ
 \subsubsection{Parameter Estimation}
 \label{sec:param}
 
-We develop an Expectation-Maximization (EM) algorithm for HBayes parameter estimation where in the E-step, we compute the expectation of the hidden variables $\mathbf{Z}$ and in the M-step, we try to find $\Theta$ that maximizes lower bound of the variational free energy $\mathcal{Q}_{\xi}'(q)$ (eq.(\ref{eq:approx_variational_energy})). In the M-step, we use coordinate ascent variational inference (CAVI) \cite{bishop2006pattern} to optimize $\mathcal{Q}_{\xi}'(q)$. CAVI iteratively optimizes each factor of the mean field variational distribution, while holding the others fixed.
+We develop a Variational Bayes (VB) algorithm for HBayes parameter estimation where in the E-step, we compute the expectation of the hidden variables $\mathbf{Z}$ and in the M-step, we try to find $\Theta$ that maximizes lower bound of the variational free energy $\mathcal{Q}_{\xi}'(q)$ (eq.(\ref{eq:approx_variational_energy})). In the VB algorithm, we use coordinate ascent variational inference (CAVI) \cite{bishop2006pattern} to optimize $\mathcal{Q}_{\xi}'(q)$. CAVI iteratively optimizes each factor of the mean field variational distribution, while holding the others fixed.
 
-\noindent \textbf{Parametrization and update rule of $q(\mathbf{Z})$}
+\noindent \textbf{update expecttation of $Z$}
 We assume each brand's style membership latent variable is independent and therefore, $q(\mathbf{Z}) = \prod_{i=1}^B q(\mathbf{z}_i)$. For each $\mathbf{z}_i$, we parameterize $q(\mathbf{z}_i)$ as a multinomial distribution, i.e.,
 
 $$q(\mathbf{z}_i) = \prod_{j=1}^S \mu_{i,j}^{\mathbb{I}(z_{i,j}=1)}$$
 
 and the update rule for $\mu_{i,j}$ is  
 
+\begin{align}
+\mu_{i,j} =  \frac{\rho_{i,j}}{\sum_{p=1}^S\rho_{i,p}} 
+\end{align}
+\begin{align}
+\ln(\rho_{i,j}) =  \mathbb{E}[\ln(\bm{\theta}_j)]+\frac{d}{2}\mathbb{E}[\ln(\delta_b)]-\frac{d}{2}\ln(2\pi) 
+ -\frac{1}{2}\mathbb{E}\big[\delta_b(\mathbf{B}_i-\mathbf{S}_j)^\mathrm{T}(\mathbf{B}_i-\mathbf{S}_j)\big]
+\end{align}
+
+\noindent where $\mathbb{E}[\cdot]$ denotes an expectation over all latent variables and parameters except current unobserved variables i.e., $\mathbb{E}[\cdot]=\mathbb{E}_{-\bm{Z}}[\cdot]$ in this part. Furthermore, in the following, we note that: 
 \begin{equation}
 \label{eq:hidden}
-\mu_{i,j} =  
+\mathbb{E}[z_{i,j}]=\mu_{i,j}
 \end{equation}
-
-\noindent \textbf{Parametrization and update rule of $q(\mathbf{U}_k)$}
-For each user $k$, $k = 1, \cdots, U$, we parameterize $q(\mathbf{U}_k)$ as a multivariate normal distribution, i.e., $q(\mathbf{U}_k) = \mathcal{N}(\mathbf{U}_k; \mu^u_k, \Sigma_k^u)$, and the update rule for $\mu^u_k$, $\Sigma_k^u$ are 
-
-\begin{align}
-\Sigma_k^u & = \big[  \delta_u \mathbf{I} + 2\lambda_t \sum_{t=1}^N \mathbb{I}(u_t = k) \mathbf{X}_t \mathbf{X}_t^T  \big]^{-1} \\ 
-\mu^u_k & = 
-\end{align}
-
-\noindent \textbf{Parametrization and update rule of $q(\mathbf{B}_i)$}
-For each brand $i$, $i = 1, \cdots, B$, we parameterize $q(\mathbf{B}_i)$ as a multivariate normal distribution, i.e., $q(\mathbf{B}_i) = \mathcal{N}(\mathbf{B}_i; \mu^b_i, \Sigma^b_i)$, and the update rule for $\mu^b_i$, $\Sigma^b_i$ are 
-
-\begin{align}
-\Sigma^b_i & = \\ 
-\mu^b_i & = 
-\end{align}
-
-
-\noindent \textbf{Parametrization and update rule of $q(\mathbf{S}_j)$}
-For each style $j$, $j = 1, \cdots, S$, we parameterize $q(\mathbf{S}_j)$ as a multivariate normal distribution, i.e., $q(\mathbf{S}_j) = \mathcal{N}(\mathbf{S}_j; \mu^s_j, \Sigma^s_j)$, and the update rule for $\mu^s_j$, $\Sigma^s_j$ are 
-
-\begin{align}
-\Sigma^s_j & = \\ 
-\mu^s_j & = 
-\end{align}
-
-
-\noindent \textbf{Parametrization and update rule of $q(\mathbf{w})$}
-For the mean variable of style prior $\mathbf{w}$, we parameterize $q(\mathbf{w})$ as a multivariate normal distribution, i.e., $q(\mathbf{w}) = \mathcal{N}(\mathbf{w}; \mu^w, \Sigma^w)$, and the update rule for $\mu^w$, $\Sigma^w$ are 
-
-\begin{align}
-\Sigma^w & = a\\ 
-\mu^w & = b
-\end{align}
-
 
 \noindent \textbf{Parametrization and update rule of $q(\mathbf{\theta})$}
 For the style proportion distribution $\mathbf{\theta}$, we parameterize $q(\mathbf{\theta})$ as a Dirichlet distribution, i.e., $q(\mathbf{\theta}) = Dir(\mathbf{\theta}; \mathbf{\gamma})$, and the update rule for $\gamma$ are 
 
 \begin{equation}
-\gamma_j =
+\label{eq:start}
+\gamma_j = \gamma_j + \sum_{i=1}^B \mu_{i,j}, j=1,\cdots,S
 \end{equation}
+
+
+
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{U}_k)$}
+For each user $k$, $k = 1, \cdots, U$, we parameterize $q(\mathbf{U}_k)$ as a multivariate normal distribution, i.e., $q(\mathbf{U}_k) = \mathcal{N}(\mathbf{U}_k; \bm{\mu}^u_k, \bm{\Sigma}_k^u)$, and the update rule for $\bm{\mu}^u_k$, $\bm{\Sigma}_k^u$ are 
+
+\begin{align}
+\bm{\Sigma}_k^u & = \big[  \delta_u \mathbf{I} + 2\lambda_t \sum_{t=1}^N \mathbb{I}(u_t = k) \mathbf{X}_t \mathbf{X}_t^T  \big]^{-1} \\ 
+\bm{\mu}^u_k & = \bm{\Sigma}_k^u\Big[  \sum_{t=1}^N\mathbb{I}(u_t=k)  \big(y_t-\frac{1}{2}-2\lambda_{t}\mathbf{x}_i^T\mathbb{E}[\mathbf{B}_{b_t}]\big)\mathbf{X}_t \Big]
+\end{align}
+
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{B}_i)$}
+For each brand $i$, $i = 1, \cdots, B$, we parameterize $q(\mathbf{B}_i)$ as a multivariate normal distribution, i.e., $q(\mathbf{B}_i) = \mathcal{N}(\mathbf{B}_i; \bm{\mu}^b_i, \bm{\Sigma}^b_i)$, and the update rule for $\bm{\mu}^b_i$, $\bm{\Sigma}^b_i$ are 
+
+\begin{align}
+\bm{\Sigma}^b_i & = \Big[\delta_b\sum_{j=1}^S\mu_{i,j}\mathbf{I}+\sum_{t=1}^N\mathbb{I}(b_t=i)2\lambda_{t}\mathbf{X}_t\mathbf{X}_t^T\Big]^{-1} \\ 
+\bm{\mu}^b_i & = \bm{\Sigma}_i^b\Big[  \delta_b\sum_{j=1}^S\mu_{i,j}\mathbb{E}[\mathbf{S}_j]+ 
+ \sum_{t=1}^N\mathbb{I}(b_t=i)\big(y_t-\frac{1}{2}- 2\lambda_{t}\mathbf{X}_t^T\mathbb{E}[\mathbf{U}_{u_t}]\big)\bm{X}_t \Big]
+\end{align}
+
+
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{S}_j)$}
+For each style $j$, $j = 1, \cdots, S$, we parameterize $q(\mathbf{S}_j)$ as a multivariate normal distribution, i.e., $q(\mathbf{S}_j) = \mathcal{N}(\mathbf{S}_j; \bm{\mu}^s_j, \bm{\Sigma}^s_j)$, and the update rule for $\bm{\mu}^s_j$, $\bm{\Sigma}^s_j$ are 
+
+\begin{align}
+\bm{\Sigma}^s_j & = \big[\delta_s+\delta_b\sum_{i=1}^{B}\mu_{i,j}\big]^{-1}\mathbf{I} \\ 
+\bm{\mu}^s_j & = \bm{\Sigma}_j^{s}\Big[ \delta_s\mathbb{E}[\bm{w}]+\delta_b\sum_{i=1}^B\mu_{i,j}\mathbb{E}[\mathbf{B}_i] \Big]
+\end{align}
+
+
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{w})$}
+For the mean variable of style prior $\mathbf{w}$, we parameterize $q(\mathbf{w})$ as a multivariate normal distribution, i.e., $q(\mathbf{w}) = \mathcal{N}(\mathbf{w}; \bm{\mu}^w, \bm{\Sigma}^w)$, and the update rule for $\bm{\mu}^w$, $\bm{\Sigma}^w$ are 
+
+\begin{align}
+\bm{\Sigma}^w & = \big[\delta_w+\delta_s\cdot S\big]^{-1}\mathbf{I}\\ 
+\bm{\mu}^w & = \bm{\Sigma}^w\Big[ \delta_s\sum_{j=1}^S\mathbb{E}[\mathbf{S}_j] \Big]
+\end{align}
 
 
 
@@ -209,13 +221,19 @@ For the style proportion distribution $\mathbf{\theta}$, we parameterize $q(\mat
 For all the precision parameters' distributions, we parameterize them as a Gamma distribution, i.e., $p(\delta_*) = \mathcal{G}(\delta_*; \alpha, \beta); \mathbf{\gamma})$, where $\delta_* \in \{ \delta_w, \delta_s, \delta_u, \delta_b \}$ and the update rule for $\alpha$ and $\beta$ are 
 
 \begin{align}
-\alpha & = a\\ 
-\beta & = b
-\label{eq:end}
+\alpha_u & = \alpha + \frac{dU}{2},\quad  \beta=\beta+\frac{1}{2}\sum_{k=1}^{U}\mathbb{E}\big[\mathbf{U}_k^T\mathbf{U}_k\big] \\ 
+\alpha_b & = \alpha + \frac{dB}{2},\quad  \beta=\beta+\frac{1}{2}\sum_{i=1}^{B}\sum_{j=1}^{S}\mu_{i,j}\mathbb{E}\big[(\mathbf{B}_i-\mathbf{S}_j)^T(\mathbf{B}_i-\mathbf{S}_j)\big] \\
+\alpha_s & = \alpha + \frac{dS}{2},\quad  \beta=\beta+\frac{1}{2}\sum_{j=1}^{S}\mathbb{E}\big[(\mathbf{S}_j-\mathbf{w})^T(\mathbf{S}_j-\mathbf{w})\big] \\
+\alpha_w & = \alpha + \frac{d}{2},\quad  \beta=\beta+\frac{1}{2}\mathbb{E}\big[\mathbf{w}^T\mathbf{w}\big] \\
 \end{align}
 
 
-
+\noindent \textbf{Update rule of $\xi$}
+For the variational parameters $\xi_{t}, t=1,\cdots,N$, in order to maximize $\mathcal{Q}'_{\xi}(q)$ such that the bound on $\mathcal{Q}(q)$ is tight \cite{bishop2006pattern}, the update rule is: 
+\begin{align}
+\xi_{t}=\sqrt{\mathbb{E}\Big[\big(\bm{X}_t^T(\mathbf{B}_{b_t}+\mathbf{U}_{u_t}\big)^2\Big]}
+\label{eq:end}
+\end{align}
 
 
 \subsubsection{Summary}
