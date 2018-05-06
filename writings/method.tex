@@ -13,16 +13,16 @@ Furthermore, we expand the hierarchy by a hidden factor, i.e., ``style''. Produc
 The generative process of HBayes can be described as follows:
 
 \begin{enumerate}
-\item[Step 1.] Draw a multivariate Gaussian prior for each style $j$, i.e, $\mathbf{S}_j \sim \mathcal{N}(\mathbf{w}, \delta_s^{-1}\mathbf{I})$ where $j \in \{1, \cdots, S\}$.
+\item[Step 1.] Draw a multivariate Gaussian prior for each user $k$, i.e, $\mathbf{U}_k \sim \mathcal{N}(\mathbf{0}, \delta_u^{-1}\mathbf{I})$ where $k \in \{1, \cdots, U\}$.
 
-\item[Step 2.] Draw a multivariate Gaussian prior for each user $k$, i.e, $\mathbf{U}_k \sim \mathcal{N}(\mathbf{0}, \delta_u^{-1}\mathbf{I})$ where $k \in \{1, \cdots, U\}$.
+\item[Step 2.] Draw a multivariate Gaussian prior for each style $j$, i.e, $\mathbf{S}_j \sim \mathcal{N}(\mathbf{w}, \delta_s^{-1}\mathbf{I})$ where $j \in \{1, \cdots, S\}$.
 
 \item[Step 3.] Draw a style proportion distribution $\boldsymbol{\theta}$ for each brand $i$, $\boldsymbol{\theta} \sim \mbox{Dir}(\boldsymbol{\gamma})$  where $i \in \{1, \cdots, B\}$.
 
 \item[Step 4.] For each brand $i$:
 	\begin{enumerate}
 		\item[Step 4.1] Draw style assignment $\mathbf{z}_i$ for brand $i$ where the selected style $p$ is sampled from $\mbox{Mult}(\boldsymbol{\theta})$. $\mathbf{z}_i$ is a $S\times1$ one hot encoding vector that $z_{i,p} = 1$ and $z_{i,j} = 0$ for $j = 1, \cdots, p-1, p+1, \cdots, S$.
-		\item[Step 4.2] Draw $\mathbf{B}_i \sim \mathcal{N}(\mathbf{S}_{p}, \delta_b)$.
+		\item[Step 4.2] Draw $\mathbf{B}_i \sim \mathcal{N}(\mathbf{S}_{p}, \delta_b^{-1}\mathbf{I})$.
 	\end{enumerate}
 
 \item[Step 5.] For each event $t$, draw $y_t$ from Bernoulli distribution where the probability $p$ is defined as $p(y_t|\mathbf{x}_t, \mathbf{B}_{b_t}, \mathbf{U}_{u_t})$.
@@ -62,7 +62,7 @@ Dir(\bm{\theta}|\bm{\gamma})=\frac{\Gamma(\sum_{j=1}^{S}\gamma_j)}{\prod_{j=1}^{
 Furthermore, in Step 4 of the generative process of HBayes, a brand is modeled as a random mixture over latent styles. Hence, we model the brand parameters by a mixture of multivariate Gaussian distribution defined as follows:
 
 \begin{equation*}
-p(\bm{B}_i|\bm{z}_i,\bm{S},\delta_b) = \prod_{j}^S p(\bm{B}_i|\bm{S}_j,\delta_b)^{\mathbb{I}(z_{i,j}=1)} = \prod_{j}^S \mathcal{N}(\bm{B}_i; \bm{S}_j,\delta_b) ^{\mathbb{I}(z_{i,j}=1)}
+p(\bm{B}_i|\bm{z}_i,\bm{S},\delta_b) = \prod_{j}^S p(\bm{B}_i|\bm{S}_j,\delta_b)^{\mathbb{I}(z_{i,j}=1)} = \prod_{j}^S \mathcal{N}(\bm{B}_i; \bm{S}_j,\delta_b^{-1}\mathbf{I}) ^{\mathbb{I}(z_{i,j}=1)}
 \end{equation*}
 
 \noindent where $z_{i,j}$ is the \emph{j}th element of $\mathbf{z}_i$ and $\mathbb{I}(\xi)$ is an indicator function that $\mathbb{I}(\xi)=1$ if the statement $\xi$ is true; $\mathbb{I}(\xi)=0$ otherwise.
@@ -89,7 +89,7 @@ We use $\Theta$ to denote all model parameters:
 
 \subsection{Optimization}
 
-Since both $\mathbf{Z}$ and $\Theta$ defined by the HBayes are unobserved, we cannot learn our HBayes directly. Instead, we infer the expectations of these latent variables and compute the expected log likelihood of the log joint probability with respect to the latent variables distribution. In the following, we omit the explicit conditioning on $\mathcal{H}$ for notational brevity. 
+Since both $\mathbf{Z}$ and $\Theta$ defined by the HBayes are unobserved, we cannot learn our HBayes directly. Instead, we infer the expectations of these latent variables and compute the expected log likelihood of the log joint probability with respect to the latent variables distribution, i.e., $\mathcal{Q}$ function defined in eq.(\ref{eq:original_q}). In the following, we omit the explicit conditioning on $\mathcal{H}$ for notational brevity. 
 
 \begin{equation}
 \label{eq:original_q}
@@ -147,9 +147,9 @@ In the following, we will maximize the lower bound of the variational free energ
 \subsubsection{Parameter Estimation}
 \label{sec:param}
 
-We develop a Variational Bayes (VB) algorithm for HBayes parameter estimation where in the E-step, we compute the expectation of the hidden variables $\mathbf{Z}$ and in the M-step, we try to find $\Theta$ that maximizes lower bound of the variational free energy $\mathcal{Q}_{\xi}'(q)$ (eq.(\ref{eq:approx_variational_energy})). In the VB algorithm, we use coordinate ascent variational inference (CAVI) \cite{bishop2006pattern} to optimize $\mathcal{Q}_{\xi}'(q)$. CAVI iteratively optimizes each factor of the mean field variational distribution, while holding the others fixed.
+We develop a Variational Bayes (VB) algorithm for HBayes parameter estimation， where in the E-step, we compute the expectation of the hidden variables $\mathbf{Z}$ and in the M-step, we try to find $\Theta$ that maximizes lower bound of the variational free energy $\mathcal{Q}_{\xi}'(q)$ (eq.(\ref{eq:approx_variational_energy})). In the VB algorithm, we use coordinate ascent variational inference (CAVI) \cite{bishop2006pattern} to optimize $\mathcal{Q}_{\xi}'(q)$. CAVI iteratively optimizes each factor of the mean field variational distribution, while holding the others fixed.
 
-\noindent \textbf{update expecttation of $Z$}
+\noindent \textbf{update expectation of $Z$}:
 We assume each brand's style membership latent variable is independent and therefore, $q(\mathbf{Z}) = \prod_{i=1}^B q(\mathbf{z}_i)$. For each $\mathbf{z}_i$, we parameterize $q(\mathbf{z}_i)$ as a multinomial distribution, i.e.,
 
 $$q(\mathbf{z}_i) = \prod_{j=1}^S \mu_{i,j}^{\mathbb{I}(z_{i,j}=1)}$$
@@ -164,13 +164,13 @@ and the update rule for $\mu_{i,j}$ is
  -\frac{1}{2}\mathbb{E}\big[\delta_b(\mathbf{B}_i-\mathbf{S}_j)^\mathrm{T}(\mathbf{B}_i-\mathbf{S}_j)\big]
 \end{align}
 
-\noindent where $\mathbb{E}[\cdot]$ denotes an expectation over all latent variables and parameters except current unobserved variables i.e., $\mathbb{E}[\cdot]=\mathbb{E}_{-\bm{Z}}[\cdot]$ in this part. Furthermore, in the following, we note that: 
+\noindent where the expectation $\mathbb{E}[\cdot]$ is with respect to the (currenctly fixed) variational density over $\Theta$  i.e., $\mathbb{E}[\cdot]=\mathbb{E}_{-\bm{Z}}[\cdot]$ in this part. Furthermore, in the following, we note that: 
 \begin{equation}
 \label{eq:hidden}
 \mathbb{E}[z_{i,j}]=\mu_{i,j}
 \end{equation}
 
-\noindent \textbf{Parametrization and update rule of $q(\mathbf{\theta})$}
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{\theta})$}:
 For the style proportion distribution $\mathbf{\theta}$, we parameterize $q(\mathbf{\theta})$ as a Dirichlet distribution, i.e., $q(\mathbf{\theta}) = Dir(\mathbf{\theta}; \mathbf{\gamma})$, and the update rule for $\gamma$ are 
 
 \begin{equation}
@@ -180,15 +180,15 @@ For the style proportion distribution $\mathbf{\theta}$, we parameterize $q(\mat
 
 
 
-\noindent \textbf{Parametrization and update rule of $q(\mathbf{U}_k)$}
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{U}_k)$}:
 For each user $k$, $k = 1, \cdots, U$, we parameterize $q(\mathbf{U}_k)$ as a multivariate normal distribution, i.e., $q(\mathbf{U}_k) = \mathcal{N}(\mathbf{U}_k; \bm{\mu}^u_k, \bm{\Sigma}_k^u)$, and the update rule for $\bm{\mu}^u_k$, $\bm{\Sigma}_k^u$ are 
 
 \begin{align}
-\bm{\Sigma}_k^u & = \big[  \delta_u \mathbf{I} + 2\lambda_t \sum_{t=1}^N \mathbb{I}(u_t = k) \mathbf{X}_t \mathbf{X}_t^T  \big]^{-1} \\ 
-\bm{\mu}^u_k & = \bm{\Sigma}_k^u\Big[  \sum_{t=1}^N\mathbb{I}(u_t=k)  \big(y_t-\frac{1}{2}-2\lambda_{t}\mathbf{x}_i^T\mathbb{E}[\mathbf{B}_{b_t}]\big)\mathbf{X}_t \Big]
+\bm{\Sigma}_k^u & = \big[  \delta_u \mathbf{I} + \sum_{t=1}^N \mathbb{I}(u_t = k) 2\lambda_t \mathbf{X}_t \mathbf{X}_t^T  \big]^{-1} \\ 
+\bm{\mu}^u_k & = \bm{\Sigma}_k^u\Big[  \sum_{t=1}^N\mathbb{I}(u_t=k)  \big(y_t-\frac{1}{2}-2\lambda_{t}\mathbf{X}_t^T\mathbb{E}[\mathbf{B}_{b_t}]\big)\mathbf{X}_t \Big]
 \end{align}
 
-\noindent \textbf{Parametrization and update rule of $q(\mathbf{B}_i)$}
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{B}_i)$}:
 For each brand $i$, $i = 1, \cdots, B$, we parameterize $q(\mathbf{B}_i)$ as a multivariate normal distribution, i.e., $q(\mathbf{B}_i) = \mathcal{N}(\mathbf{B}_i; \bm{\mu}^b_i, \bm{\Sigma}^b_i)$, and the update rule for $\bm{\mu}^b_i$, $\bm{\Sigma}^b_i$ are 
 
 \begin{align}
@@ -198,7 +198,7 @@ For each brand $i$, $i = 1, \cdots, B$, we parameterize $q(\mathbf{B}_i)$ as a m
 \end{align}
 
 
-\noindent \textbf{Parametrization and update rule of $q(\mathbf{S}_j)$}
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{S}_j)$}:
 For each style $j$, $j = 1, \cdots, S$, we parameterize $q(\mathbf{S}_j)$ as a multivariate normal distribution, i.e., $q(\mathbf{S}_j) = \mathcal{N}(\mathbf{S}_j; \bm{\mu}^s_j, \bm{\Sigma}^s_j)$, and the update rule for $\bm{\mu}^s_j$, $\bm{\Sigma}^s_j$ are 
 
 \begin{align}
@@ -207,7 +207,7 @@ For each style $j$, $j = 1, \cdots, S$, we parameterize $q(\mathbf{S}_j)$ as a m
 \end{align}
 
 
-\noindent \textbf{Parametrization and update rule of $q(\mathbf{w})$}
+\noindent \textbf{Parametrization and update rule of $q(\mathbf{w})$}:
 For the mean variable of style prior $\mathbf{w}$, we parameterize $q(\mathbf{w})$ as a multivariate normal distribution, i.e., $q(\mathbf{w}) = \mathcal{N}(\mathbf{w}; \bm{\mu}^w, \bm{\Sigma}^w)$, and the update rule for $\bm{\mu}^w$, $\bm{\Sigma}^w$ are 
 
 \begin{align}
@@ -217,19 +217,19 @@ For the mean variable of style prior $\mathbf{w}$, we parameterize $q(\mathbf{w}
 
 
 
-\noindent \textbf{Parametrization and update rule of $q(\delta_u)$, $q(\delta_b)$, $q(\delta_s)$ and $q(\delta_w)$}
-For all the precision parameters' distributions, we parameterize them as a Gamma distribution, i.e., $p(\delta_*) = \mathcal{G}(\delta_*; \alpha, \beta); \mathbf{\gamma})$, where $\delta_* \in \{ \delta_w, \delta_s, \delta_u, \delta_b \}$ and the update rule for $\alpha$ and $\beta$ are 
+\noindent \textbf{Parametrization and update rule of $q(\delta_u)$, $q(\delta_b)$, $q(\delta_s)$ and $q(\delta_w)$}:
+For all the precision parameters' distributions, we parameterize them as a Gamma distribution, i.e., $p(\delta_*) = \mathcal{G}(\delta_*; \alpha_*, \beta_* )$, where $\delta_* \in \{ \delta_w, \delta_s, \delta_u, \delta_b \}$ and the update rule for $\alpha$ and $\beta$ are 
 
 \begin{align}
 \alpha_u & = \alpha + \frac{dU}{2},\quad  \beta=\beta+\frac{1}{2}\sum_{k=1}^{U}\mathbb{E}\big[\mathbf{U}_k^T\mathbf{U}_k\big] \\ 
 \alpha_b & = \alpha + \frac{dB}{2},\quad  \beta=\beta+\frac{1}{2}\sum_{i=1}^{B}\sum_{j=1}^{S}\mu_{i,j}\mathbb{E}\big[(\mathbf{B}_i-\mathbf{S}_j)^T(\mathbf{B}_i-\mathbf{S}_j)\big] \\
 \alpha_s & = \alpha + \frac{dS}{2},\quad  \beta=\beta+\frac{1}{2}\sum_{j=1}^{S}\mathbb{E}\big[(\mathbf{S}_j-\mathbf{w})^T(\mathbf{S}_j-\mathbf{w})\big] \\
-\alpha_w & = \alpha + \frac{d}{2},\quad  \beta=\beta+\frac{1}{2}\mathbb{E}\big[\mathbf{w}^T\mathbf{w}\big] \\
+\alpha_w & = \alpha + \frac{d}{2},\quad  \beta=\beta+\frac{1}{2}\mathbb{E}\big[\mathbf{w}^T\mathbf{w}\big] 
 \end{align}
 
 
-\noindent \textbf{Update rule of $\xi$}
-For the variational parameters $\xi_{t}, t=1,\cdots,N$, in order to maximize $\mathcal{Q}'_{\xi}(q)$ such that the bound on $\mathcal{Q}(q)$ is tight \cite{bishop2006pattern}, the update rule is: 
+\noindent \textbf{Update rule of $\xi$}:
+For the variational parameters $\xi_{t}, t=1,\cdots,N$, in order to maximize $\mathcal{Q}'_{\xi}(q)$ such that the bound on $\mathcal{Q}'(q)$ is tight \cite{bishop2006pattern}, the update rule is: 
 \begin{align}
 \xi_{t}=\sqrt{\mathbb{E}\Big[\big(\bm{X}_t^T(\mathbf{B}_{b_t}+\mathbf{U}_{u_t}\big)^2\Big]}
 \label{eq:end}
@@ -250,7 +250,7 @@ The parameter estimation method for the HBayes is summarized by Algorithm \ref{a
 \Procedure{Learning HBayes}{}
 \Repeat
 \State E-step: compute expectation of $\mathbf{Z}$ by eq.(\ref{eq:hidden}).
-\State M-step: estimate $\{\bm{U}_k\}, \{\bm{B}_i\}, \{\bm{S}_j\}, \bm{w}, \boldsymbol{\theta}, \delta_u,\delta_b,\delta_s,\delta_w$ by eq.(\ref{eq:start}) - eq.(\ref{eq:end}).
+\State M-step: estimate $\{\bm{U}_k\}, \{\bm{B}_i\}, \{\bm{S}_j\}, \bm{w}, \boldsymbol{\theta}, \delta_u,\delta_b,\delta_s,\delta_w，\xi_{t}$ by eq.(\ref{eq:start}) - eq.(\ref{eq:end}).
 \Until{Convergence}
 \State
 \Return $\Theta$
@@ -260,7 +260,7 @@ The parameter estimation method for the HBayes is summarized by Algorithm \ref{a
 
 \subsection{Prediction}
 
-In the recommender system, the task is to generate top $K$ products list for each user. So, given the user $u^*$,  it's natural to expose top M products based on the probability of positive outcome. For the $m^{th}$ item, the probability is calculated as:
+In the recommender system, the task is to generate top $K$ products list for each user. So, given the user $u^*$,  it's natural to expose top M products based on the probability of the positive outcome. For the $m^{th}$ item, the probability is calculated as:
 
 \begin{equation}
 \label{prediction}
