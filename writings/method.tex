@@ -1,6 +1,6 @@
 In this work, we develop our generalized hierarchical Bayesian modeling framework that is able to capture the hierarchical structural relations and latent relations in the real-world recommendation scenarios. In our framework, we incorporate both user specific features and user events into model learning so that more personalized recommendation results can be achieved. Furthermore, we present a variational inference algorithm for the HBayes framework to provide fast parameter estimation.
 
-In the following, we will describe how HBayes works by using apparel recommendation as an illustration example. Using a real-world example helps explain the latent variables, hierarchy structural relations, and the conditional independence assumptions implied in HBayes. Please note that even we explain HBayes in apparel recommendation, the framework itself can be generalized into other recommendation scenarios with little modification. 
+In the following, we will describe how HBayes works by using apparel recommendation as an illustrative example. Using a real-world example helps explain the latent variables, hierarchy structural relations, and the conditional independence assumptions implied in HBayes. Please note that even we explain HBayes in apparel recommendation, the framework itself can be generalized into other recommendation scenarios with little modification. 
 
 
 
@@ -147,7 +147,7 @@ In the following, we will maximize the lower bound of the variational free energ
 \subsubsection{Parameter Estimation}
 \label{sec:param}
 
-We develop a Variational Bayes (VB) algorithm for HBayes parameter estimation， where in the E-step, we compute the expectation of the hidden variables $\mathbf{Z}$ and in the M-step, we try to find $\Theta$ that maximizes lower bound of the variational free energy $\mathcal{Q}_{\xi}'(q)$ (eq.(\ref{eq:approx_variational_energy})). In the VB algorithm, we use coordinate ascent variational inference (CAVI) \cite{bishop2006pattern} to optimize $\mathcal{Q}_{\xi}'(q)$. CAVI iteratively optimizes each factor of the mean field variational distribution, while holding the others fixed.
+We develop a Variational Bayes (VB) algorithm for HBayes parameter estimation, where in the E-step, we compute the expectation of the hidden variables $\mathbf{Z}$ and in the M-step, we try to find $\Theta$ that maximizes lower bound of the variational free energy $\mathcal{Q}_{\xi}'(q)$ (eq.(\ref{eq:approx_variational_energy})). In the VB algorithm, we use coordinate ascent variational inference (CAVI) \cite{bishop2006pattern} to optimize $\mathcal{Q}_{\xi}'(q)$. CAVI iteratively optimizes each factor of the mean field variational distribution, while holding the others fixed.
 
 \noindent \textbf{update expectation of $Z$}:
 We assume each brand's style membership latent variable is independent and therefore, $q(\mathbf{Z}) = \prod_{i=1}^B q(\mathbf{z}_i)$. For each $\mathbf{z}_i$, we parameterize $q(\mathbf{z}_i)$ as a multinomial distribution, i.e.,
