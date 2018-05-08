@@ -197,22 +197,6 @@
 \showISBNx{978-1-4799-4302-9}
 
 
-\bibitem[\protect\citeauthoryear{Guy, Zwerdling, Carmel, Ronen, Uziel, Yogev,
-  and Ofek-Koifman}{Guy et~al\mbox{.}}{2009}]%
-        {Guy:2009}
-\bibfield{author}{\bibinfo{person}{Ido Guy}, \bibinfo{person}{Naama Zwerdling},
-  \bibinfo{person}{David Carmel}, \bibinfo{person}{Inbal Ronen},
-  \bibinfo{person}{Erel Uziel}, \bibinfo{person}{Sivan Yogev}, {and}
-  \bibinfo{person}{Shila Ofek-Koifman}.} \bibinfo{year}{2009}\natexlab{}.
-\newblock \showarticletitle{Personalized Recommendation of Social Software
-  Items Based on Social Relations}. In \bibinfo{booktitle}{{\em Proceedings of
-  the Third ACM Conference on Recommender Systems}} {\em
-  (\bibinfo{series}{RecSys '09})}. \bibinfo{publisher}{ACM},
-  \bibinfo{address}{New York, NY, USA}, \bibinfo{pages}{53--60}.
-\newblock
-\showISBNx{978-1-60558-435-5}
-
-
 \bibitem[\protect\citeauthoryear{Jaakkola and Jordan}{Jaakkola and
   Jordan}{1997}]%
         {jaakkola1997variational}
