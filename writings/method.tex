@@ -28,7 +28,7 @@ The generative process of HBayes can be described as follows:
 \item[Step 5.] For each event $t$, draw $y_t$ from Bernoulli distribution where the probability $p$ is defined as $p(y_t|\mathbf{x}_t, \mathbf{B}_{b_t}, \mathbf{U}_{u_t})$.
 \end{enumerate}
 
-\noindent where $\delta_s$, $\delta_u$ and $\delta_b$ are the scalar precision parameters and $\mathbf{w}$ is the prior mean of $\mathbf{S}_j$. 
+\noindent where $\delta_s$, $\delta_u$ and $\delta_b$ are the scalar precision parameters and $\mathbf{w}$ is the prior mean of $\mathbf{S}_j$. $\mbox{Dir}(\cdot)$ and  $\mbox{Mult}(\cdot)$ represent Dirichlet distribution and multinomial distribution, respectively. 
 
 In this work, in order to have the higher modeling flexibility and capacity, we also treat each distribution's parameter as a random variable and define hyper-priors over them. More specifically, We draw the prior mean $\mathbf{w}$ from $\mathcal{N}(\mathbf{0}, \delta_w^{-1}\mathbf{I})$. For $\delta_w$, $\delta_s$, $\delta_u$ and $\delta_b$, we define Gamma priors over them i.e.,  $p(\delta_*) = \mathcal{G}(\alpha, \beta)$, where $\delta_* \in \{ \delta_w, \delta_s, \delta_u, \delta_b \}$. 
 
